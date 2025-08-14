@@ -24,7 +24,7 @@ These are for anyone visiting the site.
 
 Once logged in, the user should see a dashboard-style interface.
 
-* **`dashboard.html`** – Overview of user’s profile, upcoming tournaments, and recent activities.
+* **`dashboard.html`** – Overview of user’s profile, upcoming tournaments, and recent activities(tournaments registered, credits earned).
 * **`my-tournaments.html`** – Tournaments the user created or joined.
 * **`create-tournament.html`** – Form to create a new tournament (game type, rules, prizes, schedule).
 * **`tournament-details.html`** – Detailed view of a single tournament (teams, bracket, results).
