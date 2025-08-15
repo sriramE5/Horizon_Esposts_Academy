@@ -5,28 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horizon Esports Academy - Elite Gaming Organization</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;900&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
-        /* Base styles using Rajdhani font and a dark background */
+        /* === FONT & BASE STYLE UPDATE === */
         body {
-            font-family: 'Rajdhani', sans-serif;
+            /* Using Montserrat for body text for better readability */
+            font-family: 'Montserrat', sans-serif;
             background: #0a0a0a;
-            color: #e5e7eb; /* Default text color */
+            color: #e5e7eb;
             transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Orbitron font for headings and special text */
-        .orbitron {
-            font-family: 'Orbitron', monospace;
+        /* Using Exo 2 for headings - it's a modern, techy but less generic font */
+        .heading-font {
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        /* --- NEW STYLES FOR HERO TITLE --- */
+        .waviy {
+            position: relative;
+        }
+        .waviy span {
+            position: relative;
+            display: inline-block;
+            /* Exo 2 is a bit thinner, so we can make it bolder */
+            font-weight: 900;
+            /* This is the glow/shadow effect you liked */
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.5), 
+                         0 0 10px rgba(59, 130, 246, 0.4), 
+                         0 0 20px rgba(147, 51, 234, 0.3);
+            animation: flip 2.5s infinite;
+            animation-delay: calc(.2s * var(--i));
+        }
+        @keyframes flip {
+            0%, 80% {
+                transform: rotateY(360deg) 
+            }
         }
         
-        /* --- UTILITY & ANIMATION STYLES --- */
+        /* --- UTILITY & ANIMATION STYLES (Existing) --- */
         .glow-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
         .glow-red { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
         .glow-purple { box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
         .glow-green { box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
 
-        /* Hero background with animated grid and gradients */
         .hero-bg {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
             position: relative;
@@ -49,7 +72,6 @@
             animation: pulse 4s ease-in-out infinite alternate;
         }
 
-        /* Keyframe animations */
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-20px) rotate(1deg); }
@@ -73,7 +95,7 @@
             animation: slideInUp 0.7s ease-out forwards;
         }
 
-        /* --- COMPONENT STYLES --- */
+        /* --- COMPONENT STYLES (Existing) --- */
         .card-hover {
             transition: all 0.3s ease;
         }
@@ -115,7 +137,7 @@
             transform: scale(1.1);
         }
 
-        /* --- THEME TOGGLE & LIGHT THEME STYLES --- */
+        /* --- THEME TOGGLE & LIGHT THEME STYLES (Existing) --- */
         .theme-icon {
             font-size: 1.25rem;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -123,7 +145,6 @@
         .sun-icon { opacity: 0; transform: rotate(180deg) scale(0); }
         .moon-icon { opacity: 1; transform: rotate(0deg) scale(1); }
         
-        /* Light Theme Overrides */
         body.light-theme {
             background: #f8fafc;
             color: #1f2937;
@@ -150,8 +171,8 @@
             color: #1f2937 !important;
         }
         body.light-theme input::placeholder, body.light-theme textarea::placeholder { color: #9ca3af; }
-
-        /* Custom Toast Notification */
+        
+        /* Custom Toast Notification (Existing) */
         .toast-notification {
             position: fixed;
             bottom: -100px;
@@ -164,7 +185,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             z-index: 10000;
             transition: bottom 0.5s ease-in-out;
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Montserrat', sans-serif; /* Font update */
             font-weight: 600;
         }
         .toast-notification.show {
@@ -179,15 +200,14 @@
 </head>
 <body class="bg-gray-900">
 
-    <!-- Navigation -->
     <nav id="main-nav" class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-blue-500/20 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="#home" class="flex items-center space-x-2">
                     <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <span class="orbitron font-bold text-lg text-white">H</span>
+                        <span class="heading-font font-bold text-lg text-white">H</span>
                     </div>
-                    <span class="orbitron font-bold text-xl text-white hidden sm:block">HORIZON</span>
+                    <span class="heading-font font-bold text-xl text-white hidden sm:block">HORIZON</span>
                 </a>
                 <div id="desktop-menu" class="hidden md:flex items-center space-x-6">
                     <a href="#about" class="nav-link hover:text-blue-400 text-white">About</a>
@@ -206,7 +226,6 @@
                 </button>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">About</a>
@@ -229,13 +248,20 @@
     </nav>
 
     <main>
-        <!-- Hero Section -->
         <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative pt-20">
             <div class="text-center z-10 max-w-4xl mx-auto px-4">
-                <h1 class="orbitron text-5xl md:text-7xl lg:text-8xl font-black mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 bg-clip-text text-transparent animate-on-scroll">
-                    HORIZON
+                <h1 class="waviy heading-font text-5xl md:text-7xl lg:text-8xl mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 bg-clip-text ">
+                    <span style="--i:1">H</span>
+                    <span style="--i:2">O</span>
+                    <span style="--i:3">R</span>
+                    <span style="--i:4">I</span>
+                    <span style="--i:5">Z</span>
+                    <span style="--i:6">O</span>
+                    <span style="--i:7">N</span>
                 </h1>
-                <p class="orbitron text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-blue-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent animate-on-scroll" style="animation-delay: 0.2s;">ESPORTS ACADEMY</p>
+                
+                <p class="heading-font text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-blue-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent animate-on-scroll" style="animation-delay: 0.2s;">ESPORTS ACADEMY</p>
+
                 <p class="text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto animate-on-scroll" style="animation-delay: 0.4s;">
                     Forging the next generation of esports champions through world-class training, competition, and professional development.
                 </p>
@@ -250,11 +276,10 @@
             </div>
         </section>
 
-        <!-- About Section -->
         <section id="about" class="py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="orbitron text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent animate-on-scroll">
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent animate-on-scroll">
                         ABOUT HORIZON
                     </h2>
                     <p class="text-xl text-gray-300 max-w-3xl mx-auto animate-on-scroll" style="animation-delay: 0.2s;">
@@ -264,19 +289,19 @@
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="card-hover bg-gray-800 p-8 rounded-xl neon-border animate-on-scroll">
                         <div class="text-5xl mb-4">🏆</div>
-                        <h3 class="orbitron text-2xl font-bold mb-2 text-blue-400">Championships</h3>
+                        <h3 class="heading-font text-2xl font-bold mb-2 text-blue-400">Championships</h3>
                         <p class="text-4xl font-bold text-white mb-2">47</p>
                         <p class="text-gray-400">Across all game titles</p>
                     </div>
                     <div class="card-hover bg-gray-800 p-8 rounded-xl neon-border animate-on-scroll" style="animation-delay: 0.2s;">
                         <div class="text-5xl mb-4">👥</div>
-                        <h3 class="orbitron text-2xl font-bold mb-2 text-purple-400">Pro Players</h3>
+                        <h3 class="heading-font text-2xl font-bold mb-2 text-purple-400">Pro Players</h3>
                         <p class="text-4xl font-bold text-white mb-2">24</p>
                         <p class="text-gray-400">Elite competitive athletes</p>
                     </div>
                     <div class="card-hover bg-gray-800 p-8 rounded-xl neon-border animate-on-scroll" style="animation-delay: 0.4s;">
                         <div class="text-5xl mb-4">💰</div>
-                        <h3 class="orbitron text-2xl font-bold mb-2 text-green-400">Prize Money</h3>
+                        <h3 class="heading-font text-2xl font-bold mb-2 text-green-400">Prize Money</h3>
                         <p class="text-4xl font-bold text-white mb-2">$2.4M</p>
                         <p class="text-gray-400">Total career earnings</p>
                     </div>
@@ -284,37 +309,33 @@
             </div>
         </section>
 
-        <!-- Teams Section -->
         <section id="teams" class="py-24 bg-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="orbitron text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-400 to-orange-500 bg-clip-text text-transparent animate-on-scroll">
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-400 to-orange-500 bg-clip-text text-transparent animate-on-scroll">
                         OUR ELITE TEAMS
                     </h2>
                     <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Squads competing at the highest level of esports.</p>
                 </div>
                 <div class="grid lg:grid-cols-3 gap-12">
-                    <!-- Valorant Team -->
                     <div class="text-center animate-on-scroll">
-                        <h3 class="orbitron text-3xl font-bold text-red-400 mb-8">VALORANT</h3>
+                        <h3 class="heading-font text-3xl font-bold text-red-400 mb-8">VALORANT</h3>
                         <div class="space-y-6">
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-red-500/50"><h4 class="font-bold text-white">PHANTOM</h4><p class="text-sm text-gray-400">Team Captain</p></div>
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-red-500/50"><h4 class="font-bold text-white">VIPER</h4><p class="text-sm text-gray-400">Entry Fragger</p></div>
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-red-500/50"><h4 class="font-bold text-white">SAGE</h4><p class="text-sm text-gray-400">Support</p></div>
                         </div>
                     </div>
-                    <!-- League of Legends Team -->
                     <div class="text-center animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h3 class="orbitron text-3xl font-bold text-blue-400 mb-8">LEAGUE OF LEGENDS</h3>
+                        <h3 class="heading-font text-3xl font-bold text-blue-400 mb-8">LEAGUE OF LEGENDS</h3>
                         <div class="space-y-6">
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-blue-500/50"><h4 class="font-bold text-white">NEXUS</h4><p class="text-sm text-gray-400">Mid Laner</p></div>
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-blue-500/50"><h4 class="font-bold text-white">DRAVEN</h4><p class="text-sm text-gray-400">ADC</p></div>
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-blue-500/50"><h4 class="font-bold text-white">WARDEN</h4><p class="text-sm text-gray-400">Jungler</p></div>
                         </div>
                     </div>
-                    <!-- CS2 Team -->
                     <div class="text-center animate-on-scroll" style="animation-delay: 0.4s;">
-                        <h3 class="orbitron text-3xl font-bold text-orange-400 mb-8">COUNTER-STRIKE 2</h3>
+                        <h3 class="heading-font text-3xl font-bold text-orange-400 mb-8">COUNTER-STRIKE 2</h3>
                         <div class="space-y-6">
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-orange-500/50"><h4 class="font-bold text-white">GHOST</h4><p class="text-sm text-gray-400">AWPer</p></div>
                             <div class="card-hover bg-gray-800 rounded-lg p-4 border border-orange-500/50"><h4 class="font-bold text-white">BLAZE</h4><p class="text-sm text-gray-400">Rifler</p></div>
@@ -325,49 +346,41 @@
             </div>
         </section>
 
-        <!-- Tournaments Section -->
         <section id="tournaments" class="py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="orbitron text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate-on-scroll">
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate-on-scroll">
                         UPCOMING TOURNAMENTS
                     </h2>
                     <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Watch us compete for glory and prizes.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Tournament Card 1 -->
                     <div class="card-hover bg-gray-800 rounded-xl p-6 neon-border animate-on-scroll">
-                        <h3 class="orbitron text-2xl font-bold text-red-400 mb-2">VALORANT Champions Tour</h3>
+                        <h3 class="heading-font text-2xl font-bold text-red-400 mb-2">VALORANT Champions Tour</h3>
                         <p class="text-gray-300 mb-4">Prize Pool: <span class="font-bold text-white">$100,000</span></p>
                         <div class="countdown-timer bg-black/50 rounded-lg p-4" data-date="2025-08-20T18:00:00">
-                            <!-- JS will populate this -->
-                        </div>
+                            </div>
                     </div>
-                    <!-- Tournament Card 2 -->
                     <div class="card-hover bg-gray-800 rounded-xl p-6 neon-border animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h3 class="orbitron text-2xl font-bold text-blue-400 mb-2">League Regional Finals</h3>
+                        <h3 class="heading-font text-2xl font-bold text-blue-400 mb-2">League Regional Finals</h3>
                         <p class="text-gray-300 mb-4">Prize Pool: <span class="font-bold text-white">$75,000</span></p>
                         <div class="countdown-timer bg-black/50 rounded-lg p-4" data-date="2025-09-05T16:00:00">
-                            <!-- JS will populate this -->
-                        </div>
+                            </div>
                     </div>
-                    <!-- Tournament Card 3 -->
                     <div class="card-hover bg-gray-800 rounded-xl p-6 neon-border animate-on-scroll" style="animation-delay: 0.4s;">
-                        <h3 class="orbitron text-2xl font-bold text-orange-400 mb-2">CS2 Major Qualifier</h3>
+                        <h3 class="heading-font text-2xl font-bold text-orange-400 mb-2">CS2 Major Qualifier</h3>
                         <p class="text-gray-300 mb-4">Prize Pool: <span class="font-bold text-white">$50,000</span></p>
                         <div class="countdown-timer bg-black/50 rounded-lg p-4" data-date="2025-09-22T20:00:00">
-                            <!-- JS will populate this -->
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- News Section -->
         <section id="news" class="py-24 bg-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="orbitron text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent animate-on-scroll">
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent animate-on-scroll">
                         LATEST NEWS
                     </h2>
                     <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Stay updated with our latest achievements and announcements.</p>
@@ -376,21 +389,21 @@
                     <div class="card-hover bg-gray-800 rounded-xl overflow-hidden neon-border animate-on-scroll">
                         <div class="p-6">
                             <p class="text-sm text-blue-400 mb-2">July 28, 2025</p>
-                            <h3 class="orbitron text-xl font-bold mb-3 text-white">Horizon Wins Regional Championship!</h3>
+                            <h3 class="heading-font text-xl font-bold mb-3 text-white">Horizon Wins Regional Championship!</h3>
                             <p class="text-gray-400">Our Valorant team dominated the regional finals with a 3-0 victory.</p>
                         </div>
                     </div>
                     <div class="card-hover bg-gray-800 rounded-xl overflow-hidden neon-border animate-on-scroll" style="animation-delay: 0.2s;">
                         <div class="p-6">
                             <p class="text-sm text-purple-400 mb-2">July 25, 2025</p>
-                            <h3 class="orbitron text-xl font-bold mb-3 text-white">New Academy Program Launched</h3>
+                            <h3 class="heading-font text-xl font-bold mb-3 text-white">New Academy Program Launched</h3>
                             <p class="text-gray-400">We're excited to announce our new training program for aspiring pros.</p>
                         </div>
                     </div>
                     <div class="card-hover bg-gray-800 rounded-xl overflow-hidden neon-border animate-on-scroll" style="animation-delay: 0.4s;">
                          <div class="p-6">
                             <p class="text-sm text-green-400 mb-2">July 22, 2025</p>
-                            <h3 class="orbitron text-xl font-bold mb-3 text-white">Partnership with Razer</h3>
+                            <h3 class="heading-font text-xl font-bold mb-3 text-white">Partnership with Razer</h3>
                             <p class="text-gray-400">Proud to partner with a leader in gaming peripherals for our teams.</p>
                         </div>
                     </div>
@@ -398,11 +411,10 @@
             </div>
         </section>
 
-        <!-- Academy Section -->
         <section id="academy" class="py-24 bg-gray-900">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="orbitron text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent animate-on-scroll">
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent animate-on-scroll">
                         TRAINING ACADEMY
                     </h2>
                     <p class="text-xl text-gray-300 max-w-3xl mx-auto animate-on-scroll" style="animation-delay: 0.2s;">
@@ -411,7 +423,7 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="animate-on-scroll">
-                        <h3 class="orbitron text-3xl font-bold mb-6 text-blue-400">What We Offer</h3>
+                        <h3 class="heading-font text-3xl font-bold mb-6 text-blue-400">What We Offer</h3>
                         <div class="space-y-4">
                             <div class="flex items-center space-x-4"><div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">✓</div><span class="text-lg">1-on-1 Professional Coaching</span></div>
                             <div class="flex items-center space-x-4"><div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">✓</div><span class="text-lg">Team Strategy Development</span></div>
@@ -420,7 +432,7 @@
                         </div>
                     </div>
                     <div class="neon-border p-8 bg-gray-800 rounded-xl animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h4 class="orbitron text-2xl font-bold mb-4 text-center text-purple-400">ENROLLMENT OPEN</h4>
+                        <h4 class="heading-font text-2xl font-bold mb-4 text-center text-purple-400">ENROLLMENT OPEN</h4>
                         <div class="text-center mb-6">
                             <p class="text-5xl font-bold text-white mb-2">Rs. 299</p>
                             <p class="text-gray-400">per month</p>
@@ -433,18 +445,17 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="py-24 bg-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="orbitron text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent animate-on-scroll">
+                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent animate-on-scroll">
                         GET IN TOUCH
                     </h2>
                     <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Ready to join the elite? Contact us today.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-12">
                     <div class="animate-on-scroll">
-                        <h3 class="orbitron text-2xl font-bold mb-6 text-blue-400">Contact Information</h3>
+                        <h3 class="heading-font text-2xl font-bold mb-6 text-blue-400">Contact Information</h3>
                         <div class="space-y-6">
                             <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-2xl">📧</div><div><p class="font-semibold text-white">Email</p><p class="text-gray-400">info@horizonesports.com</p></div></div>
                             <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center text-2xl">📱</div><div><p class="font-semibold text-white">Phone</p><p class="text-gray-400">+1 (555) 123-4567</p></div></div>
@@ -452,7 +463,7 @@
                         </div>
                     </div>
                     <div class="neon-border p-8 bg-gray-800 rounded-xl animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h3 class="orbitron text-2xl font-bold mb-6 text-center text-green-400">Send a Message</h3>
+                        <h3 class="heading-font text-2xl font-bold mb-6 text-center text-green-400">Send a Message</h3>
                         <form id="contact-form" class="space-y-4">
                             <input type="text" name="name" placeholder="Your Name" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors duration-300">
                             <input type="email" name="email" placeholder="Your Email" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors duration-300">
@@ -467,11 +478,10 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-gray-900 border-t border-gray-800 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h3 class="orbitron text-xl font-bold text-center text-white mb-6">OUR SPONSORS</h3>
+                <h3 class="heading-font text-xl font-bold text-center text-white mb-6">OUR SPONSORS</h3>
                 <div class="flex flex-wrap justify-center items-center gap-8">
                     <div class="sponsor-logo w-32 h-16 flex items-center justify-center text-white font-bold cursor-pointer">RAZER</div>
                     <div class="sponsor-logo w-32 h-16 flex items-center justify-center text-white font-bold cursor-pointer">NVIDIA</div>
@@ -488,7 +498,6 @@
         </div>
     </footer>
 
-    <!-- Toast Notification Element -->
     <div id="toast" class="toast-notification"></div>
 
     <script>
