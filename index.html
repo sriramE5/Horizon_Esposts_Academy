@@ -3,642 +3,584 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horizon Esports Academy - Elite Gaming Organization</title>
+    <title>Horizon Esports - Forge Your Legacy</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;900&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
-        /* === FONT & BASE STYLE UPDATE === */
+        /* --- Base Styles & Font Configuration --- */
+        :root {
+            --color-primary: #8E2DE2;
+            --color-secondary: #4A00E0;
+            --color-accent: #00ffc3; /* Electric Cyan */
+            --color-bg-dark: #020010;
+            --color-bg-light: #F0F2F5;
+            --color-text-dark: #E0E0E0;
+            --color-text-light: #121212;
+        }
+
         body {
-            /* Using Montserrat for body text for better readability */
-            font-family: 'Montserrat', sans-serif;
-            background: #0a0a0a;
-            color: #e5e7eb;
-            transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-dark);
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
-        
-        /* Using Exo 2 for headings - it's a modern, techy but less generic font */
-        .heading-font {
-            font-family: 'Exo 2', sans-serif;
+        .font-teko {
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        /* --- NEW STYLES FOR HERO TITLE --- */
-        .waviy {
-            position: relative;
+        /* --- Theme Toggle & Light Mode --- */
+        body.light-theme {
+            background-color: var(--color-bg-light);
+            color: var(--color-text-light);
         }
-        .waviy span {
-            position: relative;
-            display: inline-block;
-            /* Exo 2 is a bit thinner, so we can make it bolder */
-            font-weight: 900;
-            /* This is the glow/shadow effect you liked */
-            text-shadow: 0 0 5px rgba(59, 130, 246, 0.5), 
-                         0 0 10px rgba(59, 130, 246, 0.4), 
-                         0 0 20px rgba(147, 51, 234, 0.3);
-            animation: flip 2.5s infinite;
-            animation-delay: calc(.2s * var(--i));
+        .theme-toggle-icon {
+            transition: transform 0.5s ease, opacity 0.5s ease;
         }
-        @keyframes flip {
-            0%, 80% {
-                transform: rotateY(360deg) 
-            }
+        .sun-icon { position: absolute; opacity: 0; transform: rotate(-90deg) scale(0.5); }
+        .moon-icon { position: absolute; opacity: 1; transform: rotate(0deg) scale(1); }
+        body.light-theme .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); }
+        body.light-theme .moon-icon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+        body.light-theme .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0, 0, 0, 0.1);
         }
-        
-        /* --- UTILITY & ANIMATION STYLES (Existing) --- */
-        .glow-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-        .glow-red { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
-        .glow-purple { box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
-        .glow-green { box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
+        body.light-theme .glass-card:hover {
+             background: rgba(255, 255, 255, 0.8);
+        }
+        body.light-theme header.scrolled, body.light-theme #mobile-menu {
+            background: rgba(255,255,255,0.8);
+            border-bottom-color: #e5e7eb;
+        }
+        body.light-theme .stat-card {
+            background: linear-gradient(90deg, rgba(142, 45, 226, 0.05), transparent);
+        }
+        body.light-theme input, body.light-theme textarea {
+            background-color: #FFF;
+            border-color: #d1d5db;
+        }
+        body.light-theme .team-swiper .swiper-slide {
+             background: #e9e9f0;
+        }
+        body.light-theme .team-swiper .swiper-button-next, body.light-theme .team-swiper .swiper-button-prev {
+            color: var(--color-text-light);
+        }
+        /* --- FIX: Light mode text color overrides --- */
+        body.light-theme .text-white {
+            color: var(--color-text-light) !important;
+        }
+        body.light-theme .text-gray-300 {
+            color: #4a5568 !important; /* A mid-gray for light mode */
+        }
+        body.light-theme .hover\:text-white:hover {
+            color: var(--color-primary) !important;
+        }
 
-        .hero-bg {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+
+        /* --- Hero Section & Interactive Background --- */
+        .hero-section {
             position: relative;
             overflow: hidden;
         }
-        .hero-bg::before {
-            content: '';
+        #particle-canvas {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.1" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            animation: float 20s ease-in-out infinite;
+            z-index: 0;
         }
-        .hero-bg::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(239, 68, 68, 0.1) 0%, transparent 50%);
-            animation: pulse 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(1deg); }
-        }
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
-        }
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-on-scroll {
+        .hero-title .char {
+            display: inline-block;
             opacity: 0;
+            transform: translateY(-50px) scale(0.5) rotate(180deg);
+            animation: hero-char-enter 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: var(--char-index);
         }
-        .animate-on-scroll.animated {
-            animation: slideInUp 0.7s ease-out forwards;
+        @keyframes hero-char-enter {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
         }
 
-        /* --- COMPONENT STYLES (Existing) --- */
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
-        }
-        .neon-border {
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .neon-border:hover {
-            border-color: rgba(59, 130, 246, 0.7);
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-        }
-        .nav-link {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after {
+        /* --- Team Section Carousel --- */
+        .team-swiper {
             width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
-        .sponsor-logo {
-            filter: grayscale(100%) brightness(0.7);
-            transition: all 0.3s ease;
+        .team-swiper .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 320px; 
+            height: 450px;
+            background: #111;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(142, 45, 226, 0.3);
+            transition: background 0.5s ease;
         }
-        .sponsor-logo:hover {
-            filter: grayscale(0%) brightness(1);
+        .team-swiper .swiper-slide-shadow-left,
+        .team-swiper .swiper-slide-shadow-right {
+            background-image: none;
+        }
+        .team-member-card .member-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .team-member-card:hover .member-image {
             transform: scale(1.1);
         }
+        .team-swiper .swiper-button-next, .team-swiper .swiper-button-prev {
+            color: var(--color-accent);
+        }
 
-        /* --- THEME TOGGLE & LIGHT THEME STYLES (Existing) --- */
-        .theme-icon {
-            font-size: 1.25rem;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        /* --- General UI & Animations --- */
+        .glass-card {
+            background: rgba(15, 12, 41, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(142, 45, 226, 0.3);
+            transition: all 0.3s ease;
         }
-        .sun-icon { opacity: 0; transform: rotate(180deg) scale(0); }
-        .moon-icon { opacity: 1; transform: rotate(0deg) scale(1); }
-        
-        body.light-theme {
-            background: #f8fafc;
-            color: #1f2937;
+        .glass-card:hover {
+            background: rgba(25, 22, 51, 0.7);
+            border-color: var(--color-accent);
+            transform: translateY(-8px) scale(1.02);
         }
-        body.light-theme .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); }
-        body.light-theme .moon-icon { opacity: 0; transform: rotate(-180deg) scale(0); }
-        body.light-theme nav { background: rgba(255, 255, 255, 0.8); border-bottom-color: rgba(0, 0, 0, 0.1); }
-        body.light-theme .text-white { color: #1f2937 !important; }
-        body.light-theme .text-gray-300 { color: #4b5563 !important; }
-        body.light-theme .text-gray-400 { color: #6b7280 !important; }
-        body.light-theme .bg-black, body.light-theme .bg-gray-900 { background: #f9fafb !important; }
-        body.light-theme .bg-gray-800 { background: #f3f4f6 !important; }
-        body.light-theme .bg-gray-700 { background: #e5e7eb !important; }
-        body.light-theme .border-gray-800 { border-color: #e5e7eb !important; }
-        body.light-theme .border-gray-600 { border-color: #d1d5db !important; }
-        body.light-theme .hero-bg { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); }
-        body.light-theme .hero-bg::before { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid-light" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23374151" stroke-width="0.1" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid-light)"/></svg>'); }
-        body.light-theme .hero-bg::after { opacity: 0.5; }
-        body.light-theme .card-hover:hover { box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15); }
-        body.light-theme .neon-border { border-color: rgba(59, 130, 246, 0.4); }
-        body.light-theme input, body.light-theme select, body.light-theme textarea {
-            background: #ffffff !important;
-            border-color: #d1d5db !important;
-            color: #1f2937 !important;
+        .stat-card {
+            border-left: 4px solid var(--color-primary);
+            background: linear-gradient(90deg, rgba(142, 45, 226, 0.1), transparent);
+            transition: all 0.3s ease;
         }
-        body.light-theme input::placeholder, body.light-theme textarea::placeholder { color: #9ca3af; }
-        
-        /* Custom Toast Notification (Existing) */
-        .toast-notification {
-            position: fixed;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #1f2937;
-            color: #fff;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            z-index: 10000;
-            transition: bottom 0.5s ease-in-out;
-            font-family: 'Montserrat', sans-serif; /* Font update */
-            font-weight: 600;
+        .stat-card:hover {
+            background: linear-gradient(90deg, rgba(0, 255, 195, 0.15), transparent);
+            border-left-color: var(--color-accent);
+            transform: scale(1.05);
         }
-        .toast-notification.show {
-            bottom: 30px;
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        body.light-theme .toast-notification {
-            background-color: #fff;
-            color: #1f2937;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
-<body class="bg-gray-900">
+<body class="antialiased">
 
-    <nav id="main-nav" class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-blue-500/20 transition-all duration-300">
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 transition-all duration-300" id="main-header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <a href="#home" class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <span class="heading-font font-bold text-lg text-white">H</span>
-                    </div>
-                    <span class="heading-font font-bold text-xl text-white hidden sm:block">HORIZON</span>
+                <a href="#home" class="flex items-center space-x-3">
+                    <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="logo-gradient" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#8E2DE2"/>
+                                <stop offset="1" stop-color="#00ffc3"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="font-teko text-3xl text-white">HORIZON</span>
                 </a>
-                <div id="desktop-menu" class="hidden md:flex items-center space-x-6">
-                    <a href="#about" class="nav-link hover:text-blue-400 text-white">About</a>
-                    <a href="#teams" class="nav-link hover:text-blue-400 text-white">Teams</a>
-                    <a href="#tournaments" class="nav-link hover:text-blue-400 text-white">Tournaments</a>
-                    <a href="#news" class="nav-link hover:text-blue-400 text-white">News</a>
-                    <a href="#academy" class="nav-link hover:text-blue-400 text-white">Academy</a>
-                    <a href="#contact" class="nav-link hover:text-blue-400 text-white">Contact</a>
-                    <button id="themeToggle" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-700" title="Toggle Day/Night Mode">
-                        <span class="theme-icon sun-icon">☀</span>
-                        <span class="theme-icon moon-icon">🌙</span>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-300 hover:text-white transition-colors duration-300">ABOUT</a>
+                    <a href="#teams" class="text-gray-300 hover:text-white transition-colors duration-300">ROSTERS</a>
+                    <a href="#our-team" class="text-gray-300 hover:text-white transition-colors duration-300">PLAYERS</a>
+                    <a href="#news" class="text-gray-300 hover:text-white transition-colors duration-300">NEWS</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="relative w-8 h-8 flex items-center justify-center" aria-label="Toggle theme">
+                        <svg class="w-6 h-6 theme-toggle-icon sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg class="w-6 h-6 theme-toggle-icon moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                     <a href="#contact" class="hidden md:block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-2 px-6 rounded-md hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+                        JOIN US
+                    </a>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" class="md:hidden text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
-                <button id="mobile-menu-button" class="md:hidden text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">About</a>
-                <a href="#teams" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Teams</a>
-                <a href="#tournaments" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Tournaments</a>
-                <a href="#news" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">News</a>
-                <a href="#academy" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Academy</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">Contact</a>
-                <div class="border-t border-gray-700 mt-4 pt-4">
-                    <div class="flex items-center justify-between px-3">
-                        <span class="text-white font-medium">Switch Theme</span>
-                        <button id="mobileThemeToggle" class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-700" title="Toggle Day/Night Mode">
-                            <span class="theme-icon sun-icon">☀</span>
-                            <span class="theme-icon moon-icon">🌙</span>
-                        </button>
-                    </div>
-                </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-lg">
+             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">ABOUT</a>
+                <a href="#teams" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">ROSTERS</a>
+                <a href="#our-team" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">PLAYERS</a>
+                <a href="#news" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">NEWS</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">JOIN US</a>
             </div>
         </div>
-    </nav>
+    </header>
 
     <main>
-        <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative pt-20">
-            <div class="text-center z-10 max-w-4xl mx-auto px-4">
-                <h1 class="waviy heading-font text-5xl md:text-7xl lg:text-8xl mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-red-500 bg-clip-text ">
-                    <span style="--i:1">H</span>
-                    <span style="--i:2">O</span>
-                    <span style="--i:3">R</span>
-                    <span style="--i:4">I</span>
-                    <span style="--i:5">Z</span>
-                    <span style="--i:6">O</span>
-                    <span style="--i:7">N</span>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section min-h-screen flex items-center justify-center">
+            <canvas id="particle-canvas"></canvas>
+            <div class="text-center z-10 max-w-5xl mx-auto px-4">
+                <h1 class="hero-title font-teko text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] text-white leading-none" id="hero-title-text">
+                    <!-- JS populates this -->
                 </h1>
-                
-                <p class="heading-font text-4xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-blue-300 via-cyan-400 to-teal-500 bg-clip-text text-transparent animate-on-scroll" style="animation-delay: 0.2s;">ESPORTS ACADEMY</p>
-
-                <p class="text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto animate-on-scroll" style="animation-delay: 0.4s;">
-                    Forging the next generation of esports champions through world-class training, competition, and professional development.
+                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mt-4 scroll-reveal">
+                    FORGING THE NEXT GENERATION OF ESPORTS CHAMPIONS.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-on-scroll" style="animation-delay: 0.6s;">
-                    <a href="#academy" class="pulse-glow bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105">
-                        JOIN THE ACADEMY
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                    <div class="scroll-reveal">
+                        <h2 class="font-teko text-5xl md:text-6xl text-white">WHO WE ARE</h2>
+                        <p class="text-base md:text-lg text-gray-400 mt-4 leading-relaxed">
+                            Horizon is more than an esports organization; it's a crucible for talent. Founded in 2020, we've rapidly ascended to become a powerhouse in competitive gaming. Our mission is to identify, nurture, and propel aspiring gamers to the zenith of the professional world.
+                        </p>
+                        <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
+                            <div class="stat-card p-4 scroll-reveal" style="transition-delay: 0.2s;">
+                                <p class="font-teko text-4xl md:text-5xl text-purple-400">47+</p>
+                                <p class="text-gray-300">Championships</p>
+                            </div>
+                            <div class="stat-card p-4 scroll-reveal" style="transition-delay: 0.4s;">
+                                <p class="font-teko text-4xl md:text-5xl text-purple-400">$2.4M</p>
+                                <p class="text-gray-300">Prize Money</p>
+                            </div>
+                            <div class="stat-card p-4 scroll-reveal" style="transition-delay: 0.6s;">
+                                <p class="font-teko text-4xl md:text-5xl text-purple-400">5</p>
+                                <p class="text-gray-300">Pro Rosters</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                        <div class="relative p-2 border-2 border-purple-800 rounded-lg">
+                            <img src="https://placehold.co/600x700/8E2DE2/FFFFFF?text=Team+Victory" alt="Horizon Team Celebrating" class="w-full h-auto rounded-lg">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teams Section -->
+        <section id="teams" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">MEET OUR ROSTERS</h2>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Dominating across the world's biggest esports titles.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+                    <div class="glass-card p-8 rounded-lg scroll-reveal"><h3 class="font-teko text-4xl text-red-400">VALORANT</h3></div>
+                    <div class="glass-card p-8 rounded-lg scroll-reveal" style="transition-delay: 0.2s;"><h3 class="font-teko text-4xl text-blue-400">LEAGUE OF LEGENDS</h3></div>
+                    <div class="glass-card p-8 rounded-lg scroll-reveal" style="transition-delay: 0.4s;"><h3 class="font-teko text-4xl text-orange-400">COUNTER-STRIKE 2</h3></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Our Team Section -->
+        <section id="our-team" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">MEET THE TEAM</h2>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">The masterminds and rising stars behind our success.</p>
+            </div>
+            <!-- Swiper -->
+            <div class="swiper-container team-swiper mt-16 px-4 sm:px-0">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide team-member-card">
+                        <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+1" class="member-image" alt="Player 1" />
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <p style="color: var(--color-accent)">ROLE / TITLE</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide team-member-card">
+                        <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+2" class="member-image" alt="Player 2" />
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <p style="color: var(--color-accent)">ROLE / TITLE</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide team-member-card">
+                        <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+3" class="member-image" alt="Player 3" />
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <p style="color: var(--color-accent)">ROLE / TITLE</p>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide team-member-card">
+                        <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+4" class="member-image" alt="Player 4" />
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <p style="color: var(--color-accent)">ROLE / TITLE</p>
+                        </div>
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="swiper-slide team-member-card">
+                        <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+5" class="member-image" alt="Player 5" />
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <p style="color: var(--color-accent)">ROLE / TITLE</p>
+                        </div>
+                    </div>
+                    <!-- Slide 6 -->
+                    <div class="swiper-slide team-member-card">
+                        <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+6" class="member-image" alt="Player 6" />
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <p style="color: var(--color-accent)">ROLE / TITLE</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="font-teko text-5xl md:text-6xl text-white text-center scroll-reveal">LATEST INTEL</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+                    <!-- News Card 1 -->
+                    <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal">
+                        <div class="overflow-hidden"><img src="https://placehold.co/600x400/FF416C/FFFFFF?text=Victory" alt="News Image 1" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">July 28, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Horizon Conquers Regional Finals!</h3></div>
                     </a>
-                    <a href="#tournaments" class="border-2 border-purple-500 text-white hover:bg-purple-500 px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300">
-                        SEE TOURNAMENTS
+                    <!-- News Card 2 -->
+                    <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.2s;">
+                        <div class="overflow-hidden"><img src="https://placehold.co/600x400/00F260/FFFFFF?text=Academy" alt="News Image 2" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">July 25, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Next-Gen Academy Program Launched</h3></div>
+                    </a>
+                    <!-- News Card 3 -->
+                    <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.4s;">
+                        <div class="overflow-hidden"><img src="https://placehold.co/600x400/0575E6/FFFFFF?text=Partnership" alt="News Image 3" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">July 22, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">New Partnership with Razer</h3></div>
                     </a>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="py-24 bg-gray-900">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent animate-on-scroll">
-                        ABOUT HORIZON
-                    </h2>
-                    <p class="text-xl text-gray-300 max-w-3xl mx-auto animate-on-scroll" style="animation-delay: 0.2s;">
-                        Founded in 2020, Horizon has become a powerhouse in competitive gaming, developing world-class talent across multiple titles.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="card-hover bg-gray-800 p-8 rounded-xl neon-border animate-on-scroll">
-                        <div class="text-5xl mb-4">🏆</div>
-                        <h3 class="heading-font text-2xl font-bold mb-2 text-blue-400">Championships</h3>
-                        <p class="text-4xl font-bold text-white mb-2">47</p>
-                        <p class="text-gray-400">Across all game titles</p>
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24">
+             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">BECOME A LEGEND</h2>
+                <form id="contact-form" class="mt-12 max-w-xl mx-auto space-y-6 scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <input type="text" name="name" placeholder="YOUR NAME" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
+                        <input type="email" name="email" placeholder="YOUR EMAIL" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
                     </div>
-                    <div class="card-hover bg-gray-800 p-8 rounded-xl neon-border animate-on-scroll" style="animation-delay: 0.2s;">
-                        <div class="text-5xl mb-4">👥</div>
-                        <h3 class="heading-font text-2xl font-bold mb-2 text-purple-400">Pro Players</h3>
-                        <p class="text-4xl font-bold text-white mb-2">24</p>
-                        <p class="text-gray-400">Elite competitive athletes</p>
-                    </div>
-                    <div class="card-hover bg-gray-800 p-8 rounded-xl neon-border animate-on-scroll" style="animation-delay: 0.4s;">
-                        <div class="text-5xl mb-4">💰</div>
-                        <h3 class="heading-font text-2xl font-bold mb-2 text-green-400">Prize Money</h3>
-                        <p class="text-4xl font-bold text-white mb-2">$2.4M</p>
-                        <p class="text-gray-400">Total career earnings</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="teams" class="py-24 bg-black">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-400 to-orange-500 bg-clip-text text-transparent animate-on-scroll">
-                        OUR ELITE TEAMS
-                    </h2>
-                    <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Squads competing at the highest level of esports.</p>
-                </div>
-                <div class="grid lg:grid-cols-3 gap-12">
-                    <div class="text-center animate-on-scroll">
-                        <h3 class="heading-font text-3xl font-bold text-red-400 mb-8">VALORANT</h3>
-                        <div class="space-y-6">
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-red-500/50"><h4 class="font-bold text-white">PHANTOM</h4><p class="text-sm text-gray-400">Team Captain</p></div>
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-red-500/50"><h4 class="font-bold text-white">VIPER</h4><p class="text-sm text-gray-400">Entry Fragger</p></div>
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-red-500/50"><h4 class="font-bold text-white">SAGE</h4><p class="text-sm text-gray-400">Support</p></div>
-                        </div>
-                    </div>
-                    <div class="text-center animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h3 class="heading-font text-3xl font-bold text-blue-400 mb-8">LEAGUE OF LEGENDS</h3>
-                        <div class="space-y-6">
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-blue-500/50"><h4 class="font-bold text-white">NEXUS</h4><p class="text-sm text-gray-400">Mid Laner</p></div>
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-blue-500/50"><h4 class="font-bold text-white">DRAVEN</h4><p class="text-sm text-gray-400">ADC</p></div>
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-blue-500/50"><h4 class="font-bold text-white">WARDEN</h4><p class="text-sm text-gray-400">Jungler</p></div>
-                        </div>
-                    </div>
-                    <div class="text-center animate-on-scroll" style="animation-delay: 0.4s;">
-                        <h3 class="heading-font text-3xl font-bold text-orange-400 mb-8">COUNTER-STRIKE 2</h3>
-                        <div class="space-y-6">
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-orange-500/50"><h4 class="font-bold text-white">GHOST</h4><p class="text-sm text-gray-400">AWPer</p></div>
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-orange-500/50"><h4 class="font-bold text-white">BLAZE</h4><p class="text-sm text-gray-400">Rifler</p></div>
-                            <div class="card-hover bg-gray-800 rounded-lg p-4 border border-orange-500/50"><h4 class="font-bold text-white">HAWK</h4><p class="text-sm text-gray-400">IGL</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tournaments" class="py-24 bg-gray-900">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent animate-on-scroll">
-                        UPCOMING TOURNAMENTS
-                    </h2>
-                    <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Watch us compete for glory and prizes.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card-hover bg-gray-800 rounded-xl p-6 neon-border animate-on-scroll">
-                        <h3 class="heading-font text-2xl font-bold text-red-400 mb-2">VALORANT Champions Tour</h3>
-                        <p class="text-gray-300 mb-4">Prize Pool: <span class="font-bold text-white">$100,000</span></p>
-                        <div class="countdown-timer bg-black/50 rounded-lg p-4" data-date="2025-08-20T18:00:00">
-                            </div>
-                    </div>
-                    <div class="card-hover bg-gray-800 rounded-xl p-6 neon-border animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h3 class="heading-font text-2xl font-bold text-blue-400 mb-2">League Regional Finals</h3>
-                        <p class="text-gray-300 mb-4">Prize Pool: <span class="font-bold text-white">$75,000</span></p>
-                        <div class="countdown-timer bg-black/50 rounded-lg p-4" data-date="2025-09-05T16:00:00">
-                            </div>
-                    </div>
-                    <div class="card-hover bg-gray-800 rounded-xl p-6 neon-border animate-on-scroll" style="animation-delay: 0.4s;">
-                        <h3 class="heading-font text-2xl font-bold text-orange-400 mb-2">CS2 Major Qualifier</h3>
-                        <p class="text-gray-300 mb-4">Prize Pool: <span class="font-bold text-white">$50,000</span></p>
-                        <div class="countdown-timer bg-black/50 rounded-lg p-4" data-date="2025-09-22T20:00:00">
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="news" class="py-24 bg-black">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent animate-on-scroll">
-                        LATEST NEWS
-                    </h2>
-                    <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Stay updated with our latest achievements and announcements.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card-hover bg-gray-800 rounded-xl overflow-hidden neon-border animate-on-scroll">
-                        <div class="p-6">
-                            <p class="text-sm text-blue-400 mb-2">July 28, 2025</p>
-                            <h3 class="heading-font text-xl font-bold mb-3 text-white">Horizon Wins Regional Championship!</h3>
-                            <p class="text-gray-400">Our Valorant team dominated the regional finals with a 3-0 victory.</p>
-                        </div>
-                    </div>
-                    <div class="card-hover bg-gray-800 rounded-xl overflow-hidden neon-border animate-on-scroll" style="animation-delay: 0.2s;">
-                        <div class="p-6">
-                            <p class="text-sm text-purple-400 mb-2">July 25, 2025</p>
-                            <h3 class="heading-font text-xl font-bold mb-3 text-white">New Academy Program Launched</h3>
-                            <p class="text-gray-400">We're excited to announce our new training program for aspiring pros.</p>
-                        </div>
-                    </div>
-                    <div class="card-hover bg-gray-800 rounded-xl overflow-hidden neon-border animate-on-scroll" style="animation-delay: 0.4s;">
-                         <div class="p-6">
-                            <p class="text-sm text-green-400 mb-2">July 22, 2025</p>
-                            <h3 class="heading-font text-xl font-bold mb-3 text-white">Partnership with Razer</h3>
-                            <p class="text-gray-400">Proud to partner with a leader in gaming peripherals for our teams.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="academy" class="py-24 bg-gray-900">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent animate-on-scroll">
-                        TRAINING ACADEMY
-                    </h2>
-                    <p class="text-xl text-gray-300 max-w-3xl mx-auto animate-on-scroll" style="animation-delay: 0.2s;">
-                        Professional coaching and development programs designed to elevate your game to the next level.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div class="animate-on-scroll">
-                        <h3 class="heading-font text-3xl font-bold mb-6 text-blue-400">What We Offer</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center space-x-4"><div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">✓</div><span class="text-lg">1-on-1 Professional Coaching</span></div>
-                            <div class="flex items-center space-x-4"><div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">✓</div><span class="text-lg">Team Strategy Development</span></div>
-                            <div class="flex items-center space-x-4"><div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">✓</div><span class="text-lg">Mental Performance Training</span></div>
-                            <div class="flex items-center space-x-4"><div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">✓</div><span class="text-lg">Tournament Preparation & Scrims</span></div>
-                        </div>
-                    </div>
-                    <div class="neon-border p-8 bg-gray-800 rounded-xl animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h4 class="heading-font text-2xl font-bold mb-4 text-center text-purple-400">ENROLLMENT OPEN</h4>
-                        <div class="text-center mb-6">
-                            <p class="text-5xl font-bold text-white mb-2">Rs. 299</p>
-                            <p class="text-gray-400">per month</p>
-                        </div>
-                        <button class="w-full glow-green bg-green-600 hover:bg-green-700 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105">
-                            START YOUR JOURNEY
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="py-24 bg-black">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text text-transparent animate-on-scroll">
-                        GET IN TOUCH
-                    </h2>
-                    <p class="text-xl text-gray-300 animate-on-scroll" style="animation-delay: 0.2s;">Ready to join the elite? Contact us today.</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div class="animate-on-scroll">
-                        <h3 class="heading-font text-2xl font-bold mb-6 text-blue-400">Contact Information</h3>
-                        <div class="space-y-6">
-                            <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-2xl">📧</div><div><p class="font-semibold text-white">Email</p><p class="text-gray-400">info@horizonesports.com</p></div></div>
-                            <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center text-2xl">📱</div><div><p class="font-semibold text-white">Phone</p><p class="text-gray-400">+1 (555) 123-4567</p></div></div>
-                            <div class="flex items-center space-x-4"><div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center text-2xl">📍</div><div><p class="font-semibold text-white">Location</p><p class="text-gray-400">Kakinada A.P</p></div></div>
-                        </div>
-                    </div>
-                    <div class="neon-border p-8 bg-gray-800 rounded-xl animate-on-scroll" style="animation-delay: 0.2s;">
-                        <h3 class="heading-font text-2xl font-bold mb-6 text-center text-green-400">Send a Message</h3>
-                        <form id="contact-form" class="space-y-4">
-                            <input type="text" name="name" placeholder="Your Name" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors duration-300">
-                            <input type="email" name="email" placeholder="Your Email" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors duration-300">
-                            <textarea name="message" placeholder="Your Message" rows="4" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors duration-300 resize-none"></textarea>
-                            <button type="submit" class="w-full glow-blue bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105">
-                                SEND MESSAGE
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                    <textarea name="message" placeholder="YOUR MESSAGE" rows="5" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300 resize-none"></textarea>
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold text-lg py-4 px-10 rounded-md transition-all duration-300 transform hover:scale-105">
+                        SEND MESSAGE
+                    </button>
+                </form>
+             </div>
         </section>
     </main>
 
-    <footer class="bg-gray-900 border-t border-gray-800 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h3 class="heading-font text-xl font-bold text-center text-white mb-6">OUR SPONSORS</h3>
-                <div class="flex flex-wrap justify-center items-center gap-8">
-                    <div class="sponsor-logo w-32 h-16 flex items-center justify-center text-white font-bold cursor-pointer">RAZER</div>
-                    <div class="sponsor-logo w-32 h-16 flex items-center justify-center text-white font-bold cursor-pointer">NVIDIA</div>
-                    <div class="sponsor-logo w-32 h-16 flex items-center justify-center text-white font-bold cursor-pointer">CORSAIR</div>
-                    <div class="sponsor-logo w-32 h-16 flex items-center justify-center text-white font-bold cursor-pointer">RED BULL</div>
-                    <div class="sponsor-logo w-32 h-16 flex items-center justify-center text-white font-bold cursor-pointer">ASUS ROG</div>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-                <p class="text-gray-400 text-sm">
-                    © 2025 Horizon Esports Academy. All rights reserved. | Designed for Champions.
-                </p>
-            </div>
+    <!-- Footer -->
+    <footer class="border-t border-purple-900/50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500">&copy; 2025 Horizon Esports. All Rights Reserved. Forge Your Legacy.</p>
         </div>
     </footer>
 
-    <div id="toast" class="toast-notification"></div>
-
+    <!-- Swiper.js JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- Interactive Particle Background ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
 
-        // --- THEME TOGGLE ---
-        const themeToggles = [document.getElementById('themeToggle'), document.getElementById('mobileThemeToggle')];
-        const body = document.body;
-
-        const applyTheme = (theme) => {
-            if (theme === 'light') {
-                body.classList.add('light-theme');
-            } else {
-                body.classList.remove('light-theme');
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = `rgba(142, 45, 226, ${Math.random()})`;
             }
-            localStorage.setItem('theme', theme);
-        };
-
-        const currentTheme = localStorage.getItem('theme') || 'dark';
-        applyTheme(currentTheme);
-
-        themeToggles.forEach(toggle => {
-            toggle.addEventListener('click', () => {
-                const newTheme = body.classList.contains('light-theme') ? 'dark' : 'light';
-                applyTheme(newTheme);
-            });
-        });
-
-        // --- TOAST NOTIFICATION ---
-        const toast = document.getElementById('toast');
-        function showToast(message) {
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+                this.x += this.speedX;
+                this.y += this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
-        // --- MOBILE MENU ---
+        function initParticles() {
+            particles = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+        
+        function connectParticles() {
+            let opacityValue = 1;
+            if (mouse.x === null) return;
+            for (let a = 0; a < particles.length; a++) {
+                let distance = Math.sqrt(
+                    (particles[a].x - mouse.x) * (particles[a].x - mouse.x) +
+                    (particles[a].y - mouse.y) * (particles[a].y - mouse.y)
+                );
+                if (distance < 250) {
+                    opacityValue = 1 - (distance / 250);
+                    ctx.strokeStyle = `rgba(0, 255, 195, ${opacityValue})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Initialize particles after defining functions
+        resizeCanvas();
+        animateParticles();
+
+        // --- Hero Title Animation ---
+        const titleText = "HORIZON";
+        const titleContainer = document.getElementById('hero-title-text');
+        titleContainer.innerHTML = titleText
+            .split('')
+            .map((char, i) => `<span class="char" style="--char-index: ${i * 0.1}s">${char}</span>`)
+            .join('');
+
+        // --- Header Style on Scroll ---
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled', 'bg-black/80', 'backdrop-blur-lg', 'border-b', 'border-purple-900/50');
+            } else {
+                header.classList.remove('scrolled', 'bg-black/80', 'backdrop-blur-lg', 'border-b', 'border-purple-900/50');
+            }
+        });
+
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+        });
+
+        // --- Mobile Menu Toggle ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        // --- SMOOTH SCROLLING ---
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Close mobile menu on link click
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                }
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
             });
         });
 
-        // --- SCROLL-BASED ANIMATIONS ---
+        // --- Scroll-based Animations ---
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) { 
+                    entry.target.classList.add('visible');
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
             observer.observe(el);
         });
-        
-        // --- NAVIGATION BAR STYLE ON SCROLL ---
-        const nav = document.getElementById('main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('bg-black/90', 'shadow-lg');
-                if(body.classList.contains('light-theme')) {
-                    nav.classList.add('bg-white/90');
+
+        // --- Swiper Initialization ---
+        var swiper = new Swiper('.team-swiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            loop: true,
+            slidesPerView: 1, // Default for mobile
+            spaceBetween: 30, // Space between slides on mobile
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                // when window width is >= 768px
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 40
+                },
+                // when window width is >= 1024px
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 50
                 }
-            } else {
-                nav.classList.remove('bg-black/90', 'shadow-lg', 'bg-white/90');
             }
         });
-
-        // --- COUNTDOWN TIMERS ---
-        function updateAllCountdowns() {
-            document.querySelectorAll('.countdown-timer').forEach(timer => {
-                const targetDate = new Date(timer.dataset.date).getTime();
-                const now = new Date().getTime();
-                const distance = targetDate - now;
-
-                if (distance < 0) {
-                    timer.innerHTML = '<div class="text-center text-red-500 font-bold text-xl">Tournament has started!</div>';
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                timer.innerHTML = `
-                    <div class="grid grid-cols-4 gap-2 text-center text-white">
-                        <div><div class="text-3xl font-bold">${String(days).padStart(2, '0')}</div><div class="text-xs text-gray-400">DAYS</div></div>
-                        <div><div class="text-3xl font-bold">${String(hours).padStart(2, '0')}</div><div class="text-xs text-gray-400">HOURS</div></div>
-                        <div><div class="text-3xl font-bold">${String(minutes).padStart(2, '0')}</div><div class="text-xs text-gray-400">MINS</div></div>
-                        <div><div class="text-3xl font-bold">${String(seconds).padStart(2, '0')}</div><div class="text-xs text-gray-400">SECS</div></div>
-                    </div>
-                `;
-            });
-        }
-        setInterval(updateAllCountdowns, 1000);
-        updateAllCountdowns();
-
-        // --- CONTACT FORM SUBMISSION ---
-        const contactForm = document.getElementById('contact-form');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-            
-            submitButton.textContent = 'SENDING...';
-            submitButton.disabled = true;
-
-            setTimeout(() => {
-                showToast('Message sent successfully! We will get back to you soon.');
-                this.reset();
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            }, 1500);
-        });
-
-        // --- GENERAL BUTTON CLICKS ---
-        document.querySelector('.glow-green').addEventListener('click', () => {
-            showToast('Redirecting to enrollment...');
-            // In a real app, you would redirect: window.location.href = '/enroll';
-        });
+        
     });
     </script>
 </body>
