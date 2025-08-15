@@ -21,7 +21,7 @@ Once logged in, the user should see a dashboard-style interface.
 
 * * **`dashboard.html`** – Main hub showing:
 
-  * Linked accounts (e.g., Discord, Steam, Riot)
+  * Linked accounts (e.g., Free fire, Bgmi, COD...)
   * Quick links to create/join tournaments
   * Overview of active tournaments they’re in
 * **`my-tournaments.html`** – Tournaments the user created or joined.
