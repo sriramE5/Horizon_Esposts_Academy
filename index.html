@@ -68,11 +68,11 @@
             background-color: #FFF;
             border-color: #d1d5db;
         }
-        body.light-theme .team-swiper .swiper-slide, body.light-theme .game-swiper .swiper-slide {
+        body.light-theme .team-swiper .swiper-slide {
              background: #e9e9f0;
         }
         body.light-theme .team-swiper .swiper-button-next, body.light-theme .team-swiper .swiper-button-prev,
-        body.light-theme .game-swiper .swiper-button-next, body.light-theme .game-swiper .swiper-button-prev {
+        body.light-theme .carousel-arrow {
             color: var(--color-text-light);
         }
         /* --- FIX: Light mode text color overrides --- */
@@ -111,15 +111,19 @@
             }
         }
         
-        /* --- NEW: 3D Game Carousel Styles --- */
+        /* --- 3D Game Carousel Styles --- */
+        .carousel-wrapper {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
         .game-carousel-stage {
             width: 100%;
-            height: 500px; /* Set a fixed height for the carousel area */
+            height: 500px; 
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            margin-top: 3rem;
             position: relative;
         }
         .game-carousel-container {
@@ -142,8 +146,8 @@
             backface-visibility: hidden;
             overflow: hidden;
             border: 1px solid rgba(142, 45, 226, 0.3);
-            display: flex; /* For positioning text */
-            align-items: flex-end; /* Align text to bottom */
+            display: flex; 
+            align-items: flex-end;
         }
         .game-carousel-img .game-info {
             position: absolute;
@@ -153,6 +157,63 @@
             padding: 1rem;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             transition: opacity 0.3s ease;
+        }
+
+        /* --- Gradient Overlay for Fading Edges --- */
+        .carousel-wrapper::before,
+        .carousel-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 30%; /* Increased width to cover empty space */
+            z-index: 2;
+            pointer-events: none;
+        }
+        .carousel-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, var(--color-bg-dark), transparent);
+        }
+        .carousel-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, var(--color-bg-dark), transparent);
+        }
+        body.light-theme .carousel-wrapper::before {
+             background: linear-gradient(to right, var(--color-bg-light), transparent);
+        }
+        body.light-theme .carousel-wrapper::after {
+             background: linear-gradient(to left, var(--color-bg-light), transparent);
+        }
+
+
+        /* --- Carousel Arrow Styles --- */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            border: none;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--color-accent);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .carousel-arrow:hover {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .carousel-arrow.prev {
+            left: 8%; /* Repositioned to be closer to cards */
+        }
+        .carousel-arrow.next {
+            right: 8%; /* Repositioned to be closer to cards */
         }
        
         /* --- Team Section Carousel --- */
@@ -235,7 +296,18 @@
             .font-teko { font-size: 3rem !important; }
             p, .text-lg { font-size: 1rem !important; }
             .glass-card { padding: 1.5rem !important; }
-            .game-carousel-container { perspective: 1000px; } /* Adjust perspective for mobile */
+            .game-carousel-container { perspective: 1000px; }
+
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+            }
+            .carousel-arrow.prev {
+                left: 0.5rem;
+            }
+            .carousel-arrow.next {
+                right: 0.5rem;
+            }
         }
 
         @media (max-width: 400px) {
@@ -316,11 +388,19 @@
                 <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Showcasing our presence in the top competitive titles.</p>
             </div>
              
-             <div class="game-carousel-stage">
-                <div class="game-carousel-container">
-                    <div class="game-carousel-ring">
-                        </div>
+             <div class="mt-12 relative carousel-wrapper">
+                <div class="game-carousel-stage">
+                    <div class="game-carousel-container">
+                        <div class="game-carousel-ring">
+                            </div>
+                    </div>
                 </div>
+                <button id="game-carousel-prev" class="carousel-arrow prev" aria-label="Previous Game">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="game-carousel-next" class="carousel-arrow next" aria-label="Next Game">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
             </div>
         </section>
         <section id="about" class="py-16 md:py-24">
@@ -329,7 +409,7 @@
                     <div class="scroll-reveal">
                         <h2 class="font-teko text-5xl md:text-6xl text-white">WHO WE ARE</h2>
                         <p class="text-base md:text-lg text-gray-400 mt-4 leading-relaxed">
-                            Horizon is more than an esports organization; it's a crucible for talent. Founded in 2020, we've rapidly ascended to become a powerhouse in competitive gaming. Our mission is to identify, nurture, and propel aspiring gamers to the zenith of the professional world.
+                            Horizon is more than an esports organization; it's a crucible for talent. Founded in 2025, we've rapidly ascended to become a powerhouse in competitive gaming. Our mission is to identify, nurture, and propel aspiring gamers to the zenith of the professional world.
                         </p>
                         <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
                             <div class="stat-card p-4 scroll-reveal" style="transition-delay: 0.2s;">
@@ -429,15 +509,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/FF416C/FFFFFF?text=Victory" alt="News Image 1" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
-                        <div class="p-6"><p class="text-sm text-purple-400">July 28, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Horizon Conquers Regional Finals!</h3></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">August 16, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Horizon Conquers Regional Finals!</h3></div>
                     </a>
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.2s;">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/00F260/FFFFFF?text=Academy" alt="News Image 2" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
-                        <div class="p-6"><p class="text-sm text-purple-400">July 25, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Next-Gen Academy Program Launched</h3></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">August 12, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Next-Gen Academy Program Launched</h3></div>
                     </a>
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.4s;">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/0575E6/FFFFFF?text=Partnership" alt="News Image 3" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
-                        <div class="p-6"><p class="text-sm text-purple-400">July 22, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">New Partnership with Razer</h3></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">August 09, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">New Partnership with Razer</h3></div>
                     </a>
                 </div>
             </div>
@@ -665,10 +745,13 @@
         // --- 3D Game Carousel Logic ---
         const games = [
             { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'CLASH SQUAD' },
-            { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'BATTLE ROYALE' },
             { img: 'https://placehold.co/400x560/4ECDC4/FFFFFF?text=BGMI', title: 'BGMI', subtitle: 'CLASSIC' },
+            { img: 'https://placehold.co/400x560/FD746C/FFFFFF?text=Valorant', title: 'VALORANT', subtitle: 'COMPETITIVE' },
             { img: 'https://placehold.co/400x560/F9A825/000000?text=COD', title: 'CALL OF DUTY', subtitle: 'MULTIPLAYER' },
+            { img: 'https://placehold.co/400x560/DA4453/FFFFFF?text=Apex+Legends', title: 'APEX LEGENDS', subtitle: 'TRIOS' },
             { img: 'https://placehold.co/400x560/2C3E50/FFFFFF?text=Clash+of+Clans', title: 'CLASH OF CLANS', subtitle: 'CLAN WARS' },
+            { img: 'https://placehold.co/400x560/007CF0/FFFFFF?text=Rocket+League', title: 'ROCKET LEAGUE', subtitle: 'DOUBLES' },
+            { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'BATTLE ROYALE' },
         ];
 
         const ring = $('.game-carousel-ring');
@@ -685,16 +768,14 @@
 
         let xPos = 0;
         const numImages = games.length;
-        const angle = 360 / numImages; // Angle between images
+        const angle = 360 / numImages;
 
         gsap.timeline()
             .set('.game-carousel-ring', { rotationY: 180, cursor: 'grab' })
             .set('.game-carousel-img', {
                 rotateY: (i) => i * -angle,
-                // ===== VALUE CHANGED HERE =====
-                transformOrigin: '50% 50% 250px', // The '250px' is the radius, reduced for less space
-                z: -280,
-                // ===== VALUE CHANGED HERE =====
+                transformOrigin: '50% 50% 450px',
+                z: -450,
                 backgroundImage: (i) => `url(${games[i].img})`,
             })
             .from('.game-carousel-img', {
@@ -714,6 +795,24 @@
                 });
             }, '-=0.5');
 
+        // Arrow Navigation Logic
+        $('#game-carousel-next').on('click', () => {
+            gsap.to('.game-carousel-ring', {
+                rotationY: `-=${angle}`,
+                duration: 0.7,
+                ease: 'power2.inOut'
+            });
+        });
+
+        $('#game-carousel-prev').on('click', () => {
+            gsap.to('.game-carousel-ring', {
+                rotationY: `+=${angle}`,
+                duration: 0.7,
+                ease: 'power2.inOut'
+            });
+        });
+
+        // Drag functionality
         $(window).on('mousedown touchstart', dragStart);
         $(window).on('mouseup touchend', dragEnd);
 
@@ -727,7 +826,7 @@
         function drag(e) {
             if (e.touches) e.clientX = e.touches[0].clientX;
             gsap.to('.game-carousel-ring', {
-                rotationY: '-=' + ((Math.round(e.clientX) - xPos) % 360) * 0.5, // Slower drag speed
+                rotationY: '-=' + ((Math.round(e.clientX) - xPos) % 360) * 0.5,
             });
             xPos = Math.round(e.clientX);
         }
