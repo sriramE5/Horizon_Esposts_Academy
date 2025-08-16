@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Swiper.js CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         /* --- Base Styles & Font Configuration --- */
@@ -65,10 +64,11 @@
             background-color: #FFF;
             border-color: #d1d5db;
         }
-        body.light-theme .team-swiper .swiper-slide {
+        body.light-theme .team-swiper .swiper-slide, body.light-theme .game-swiper .swiper-slide {
              background: #e9e9f0;
         }
-        body.light-theme .team-swiper .swiper-button-next, body.light-theme .team-swiper .swiper-button-prev {
+        body.light-theme .team-swiper .swiper-button-next, body.light-theme .team-swiper .swiper-button-prev,
+        body.light-theme .game-swiper .swiper-button-next, body.light-theme .game-swiper .swiper-button-prev {
             color: var(--color-text-light);
         }
         /* --- FIX: Light mode text color overrides --- */
@@ -106,6 +106,33 @@
                 transform: translateY(0) scale(1) rotate(0deg);
             }
         }
+        
+        /* --- Game Slider Section --- */
+        .game-swiper {
+            width: 100%;
+            padding: 50px 0;
+        }
+        .game-swiper .swiper-slide {
+            width: 300px;
+            height: 420px;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .game-swiper .game-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .game-swiper .swiper-slide:hover .game-image {
+            transform: scale(1.1);
+        }
+        .game-swiper .swiper-button-next, .game-swiper .swiper-button-prev {
+            color: var(--color-accent);
+        }
+
 
         /* --- Team Section Carousel --- */
         .team-swiper {
@@ -201,10 +228,6 @@
                 padding-top: 30px;
                 padding-bottom: 30px;
             }
-            /* .team-swiper .swiper-slide {
-                width: 85% !important;
-                height: 350px !important;
-            } */
             .team-swiper .swiper-button-next,
             .team-swiper .swiper-button-prev {
                 display: none; /* Hide arrows on mobile for more space */
@@ -260,7 +283,6 @@
 </head>
 <body class="antialiased">
 
-    <!-- Header -->
     <header class="fixed top-0 w-full z-50 transition-all duration-300" id="main-header">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
@@ -292,14 +314,12 @@
                      <a href="#contact" class="hidden md:block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-2 px-6 rounded-md hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
                         JOIN US
                     </a>
-                    <!-- Mobile Menu Button -->
                     <button id="mobile-menu-button" class="md:hidden text-white">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-lg">
              <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">ABOUT</a>
@@ -312,23 +332,67 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section id="home" class="hero-section min-h-screen flex items-center justify-center">
             <canvas id="particle-canvas"></canvas>
             <div class="text-center z-10 max-w-5xl mx-auto px-4">
                 <h1 class="hero-title font-teko text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] text-white leading-none" id="hero-title-text">
-                    <!-- JS populates this -->
-                </h1>
+                    </h1>
                 <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mt-4 scroll-reveal">
                     FORGING THE NEXT GENERATION OF ESPORTS CHAMPIONS.
                 </p>
             </div>
         </section>
 
-        <!-- About Section -->
+        <section id="games" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">OUR FEATURED GAMES</h2>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Showcasing our presence in the top competitive titles.</p>
+            </div>
+             <div class="swiper-container game-swiper mt-12">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide group">
+                        <img src="https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire" alt="Free Fire Clash Squad" class="game-image"/>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">FREE FIRE</h3>
+                            <p style="color: var(--color-accent)">CLASH SQUAD</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide group">
+                        <img src="https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire" alt="Free Fire Battle Royale" class="game-image"/>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">FREE FIRE</h3>
+                            <p style="color: var(--color-accent)">BATTLE ROYALE</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide group">
+                        <img src="https://placehold.co/400x560/4ECDC4/FFFFFF?text=BGMI" alt="BGMI" class="game-image"/>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">BGMI</h3>
+                            <p style="color: var(--color-accent)">CLASSIC</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide group">
+                        <img src="https://placehold.co/400x560/F9A825/000000?text=COD" alt="Call of Duty" class="game-image"/>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">CALL OF DUTY</h3>
+                            <p style="color: var(--color-accent)">MULTIPLAYER</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide group">
+                        <img src="https://placehold.co/400x560/2C3E50/FFFFFF?text=Clash+of+Clans" alt="Clash of Clans" class="game-image"/>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                            <h3 class="font-teko text-4xl text-white">CLASH OF CLANS</h3>
+                            <p style="color: var(--color-accent)">CLAN WARS</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
         <section id="about" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Responsive: Stacks vertically on mobile, becomes 2-column on medium screens -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
                     <div class="scroll-reveal">
                         <h2 class="font-teko text-5xl md:text-6xl text-white">WHO WE ARE</h2>
@@ -360,12 +424,10 @@
             </div>
         </section>
 
-        <!-- Teams Section -->
         <section id="teams" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">MEET OUR ROSTERS</h2>
                 <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Dominating across the world's biggest esports titles.</p>
-                <!-- Responsive: 1 column on mobile, 3 on large screens -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
                     <div class="glass-card p-8 rounded-lg scroll-reveal"><h3 class="font-teko text-4xl text-red-400">VALORANT</h3></div>
                     <div class="glass-card p-8 rounded-lg scroll-reveal" style="transition-delay: 0.2s;"><h3 class="font-teko text-4xl text-blue-400">LEAGUE OF LEGENDS</h3></div>
@@ -374,16 +436,13 @@
             </div>
         </section>
         
-        <!-- Our Team Section -->
         <section id="our-team" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">MEET THE TEAM</h2>
                 <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">The masterminds and rising stars behind our success.</p>
             </div>
-            <!-- Swiper -->
             <div class="swiper-container team-swiper mt-16 px-4 sm:px-0">
                 <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+1" class="member-image" alt="Player 1" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
@@ -391,7 +450,6 @@
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
-                    <!-- Slide 2 -->
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+2" class="member-image" alt="Player 2" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
@@ -399,7 +457,6 @@
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
-                    <!-- Slide 3 -->
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+3" class="member-image" alt="Player 3" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
@@ -407,7 +464,6 @@
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
-                    <!-- Slide 4 -->
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+4" class="member-image" alt="Player 4" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
@@ -415,7 +471,6 @@
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
-                    <!-- Slide 5 -->
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+5" class="member-image" alt="Player 5" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
@@ -423,7 +478,6 @@
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
-                    <!-- Slide 6 -->
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+6" class="member-image" alt="Player 6" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
@@ -432,28 +486,23 @@
                         </div>
                     </div>
                 </div>
-                <!-- Add Navigation -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
         </section>
 
-        <!-- News Section -->
         <section id="news" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="font-teko text-5xl md:text-6xl text-white text-center scroll-reveal">LATEST INTEL</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-                    <!-- News Card 1 -->
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/FF416C/FFFFFF?text=Victory" alt="News Image 1" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
                         <div class="p-6"><p class="text-sm text-purple-400">July 28, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Horizon Conquers Regional Finals!</h3></div>
                     </a>
-                    <!-- News Card 2 -->
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.2s;">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/00F260/FFFFFF?text=Academy" alt="News Image 2" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
                         <div class="p-6"><p class="text-sm text-purple-400">July 25, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Next-Gen Academy Program Launched</h3></div>
                     </a>
-                    <!-- News Card 3 -->
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.4s;">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/0575E6/FFFFFF?text=Partnership" alt="News Image 3" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
                         <div class="p-6"><p class="text-sm text-purple-400">July 22, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">New Partnership with Razer</h3></div>
@@ -462,7 +511,6 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="py-16 md:py-24">
              <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">BECOME A LEGEND</h2>
@@ -480,14 +528,12 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-purple-900/50 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p class="text-gray-500">&copy; 2025 Horizon Esports. All Rights Reserved. Forge Your Legacy.</p>
         </div>
     </footer>
 
-    <!-- Swiper.js JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -633,8 +679,28 @@
             observer.observe(el);
         });
 
-        // --- Swiper Initialization ---
-        var swiper = new Swiper('.team-swiper', {
+        // --- Swiper Initializations ---
+        // Games Swiper
+        var gameSwiper = new Swiper('.game-swiper', {
+            loop: true,
+            centeredSlides: true,
+            grabCursor: true,
+            slidesPerView: 'auto',
+            spaceBetween: 30,
+            navigation: {
+                nextEl: '.game-swiper .swiper-button-next',
+                prevEl: '.game-swiper .swiper-button-prev',
+            },
+             breakpoints: {
+                320: { slidesPerView: 1, spaceBetween: 20 },
+                768: { slidesPerView: 2, spaceBetween: 30 },
+                1024: { slidesPerView: 3, spaceBetween: 40 },
+                1440: { slidesPerView: 4, spaceBetween: 50 }
+            }
+        });
+
+        // Team Swiper
+        var teamSwiper = new Swiper('.team-swiper', {
             effect: 'coverflow',
             grabCursor: true,
             centeredSlides: true,
@@ -649,26 +715,14 @@
                 slideShadows: true,
             },
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: '.team-swiper .swiper-button-next',
+                prevEl: '.team-swiper .swiper-button-prev',
             },
             breakpoints: {
-                320: {
-                    slidesPerView: 1,
-                    spaceBetween: 20
-                },
-                768: {
-                    slidesPerView: 1,
-                    spaceBetween: 30
-                },
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 40
-                },
-                1440: {
-                    slidesPerView: 3,
-                    spaceBetween: 50
-                }
+                320: { slidesPerView: 1, spaceBetween: 20 },
+                768: { slidesPerView: 1, spaceBetween: 30 },
+                1024: { slidesPerView: 3, spaceBetween: 40 },
+                1440: { slidesPerView: 3, spaceBetween: 50 }
             }
         });
 
