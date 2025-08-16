@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>Horizon Esports - Forge Your Legacy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,8 +116,8 @@
         .team-swiper .swiper-slide {
             background-position: center;
             background-size: cover;
-            width: 320px; 
-            height: 450px;
+            width: 300px; 
+            height: 420px;
             background: #111;
             border-radius: 1rem;
             overflow: hidden;
@@ -172,6 +172,76 @@
         .scroll-reveal.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+        /* --- Mobile Responsiveness Fixes --- */
+        @media (max-width: 640px) {
+            /* Header adjustments */
+            header {
+                padding: 0 1rem !important;
+            }
+            
+            /* Hero section text sizing */
+            .hero-title {
+                font-size: 4rem !important;
+                line-height: 1 !important;
+            }
+            
+            /* About section stacking */
+            #about .grid {
+                gap: 2rem !important;
+            }
+            
+            /* Stats cards */
+            .stat-card {
+                padding: 1rem !important;
+            }
+            
+            /* Team carousel sizing */
+            .team-swiper .swiper-slide {
+                width: 280px !important;
+                height: 380px !important;
+            }
+            
+            /* News cards full width */
+            #news .grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* Contact form adjustments */
+            #contact-form {
+                padding: 0 1rem;
+            }
+            
+            /* General text sizing */
+            .font-teko {
+                font-size: 3rem !important;
+            }
+            
+            p, .text-lg {
+                font-size: 1rem !important;
+            }
+            
+            /* Glass cards padding */
+            .glass-card {
+                padding: 1.5rem !important;
+            }
+        }
+
+        /* Small mobile devices (phones < 400px) */
+        @media (max-width: 400px) {
+            .hero-title {
+                font-size: 3rem !important;
+            }
+            
+            .font-teko {
+                font-size: 2.5rem !important;
+            }
+            
+            /* Logo sizing */
+            header svg {
+                width: 8rem !important;
+                height: 8rem !important;
+            }
         }
     </style>
 </head>
@@ -245,7 +315,8 @@
         <!-- About Section -->
         <section id="about" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                <!-- Responsive: Stacks vertically on mobile, becomes 2-column on medium screens -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
                     <div class="scroll-reveal">
                         <h2 class="font-teko text-5xl md:text-6xl text-white">WHO WE ARE</h2>
                         <p class="text-base md:text-lg text-gray-400 mt-4 leading-relaxed">
@@ -281,6 +352,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">MEET OUR ROSTERS</h2>
                 <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Dominating across the world's biggest esports titles.</p>
+                <!-- Responsive: 1 column on mobile, 3 on large screens -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
                     <div class="glass-card p-8 rounded-lg scroll-reveal"><h3 class="font-teko text-4xl text-red-400">VALORANT</h3></div>
                     <div class="glass-card p-8 rounded-lg scroll-reveal" style="transition-delay: 0.2s;"><h3 class="font-teko text-4xl text-blue-400">LEAGUE OF LEGENDS</h3></div>
@@ -357,7 +429,7 @@
         <section id="news" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="font-teko text-5xl md:text-6xl text-white text-center scroll-reveal">LATEST INTEL</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
                     <!-- News Card 1 -->
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/FF416C/FFFFFF?text=Victory" alt="News Image 1" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
@@ -382,7 +454,7 @@
              <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">BECOME A LEGEND</h2>
                 <form id="contact-form" class="mt-12 max-w-xl mx-auto space-y-6 scroll-reveal" style="transition-delay: 0.2s;">
-                    <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <input type="text" name="name" placeholder="YOUR NAME" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
                         <input type="email" name="email" placeholder="YOUR EMAIL" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
                     </div>
@@ -554,8 +626,8 @@
             grabCursor: true,
             centeredSlides: true,
             loop: true,
-            slidesPerView: 1, // Default for mobile
-            spaceBetween: 30, // Space between slides on mobile
+            slidesPerView: 1, // Mobile-first: 1 slide
+            spaceBetween: 30,
             coverflowEffect: {
                 rotate: 50,
                 stretch: 0,
@@ -567,21 +639,17 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            breakpoints: {
-                // when window width is >= 768px
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 40
-                },
-                // when window width is >= 1024px
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 50
-                }
-            }
         });
         
     });
+    function setVhUnits() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    // Initialize
+    setVhUnits();
+    window.addEventListener('resize', setVhUnits);
     </script>
 </body>
 </html>
