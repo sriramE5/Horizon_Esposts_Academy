@@ -691,8 +691,10 @@
             .set('.game-carousel-ring', { rotationY: 180, cursor: 'grab' })
             .set('.game-carousel-img', {
                 rotateY: (i) => i * -angle,
-                transformOrigin: '50% 50% 450px', // The '450px' is the radius of the carousel
-                z: -450,
+                // ===== VALUE CHANGED HERE =====
+                transformOrigin: '50% 50% 250px', // The '250px' is the radius, reduced for less space
+                z: -280,
+                // ===== VALUE CHANGED HERE =====
                 backgroundImage: (i) => `url(${games[i].img})`,
             })
             .from('.game-carousel-img', {
