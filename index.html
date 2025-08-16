@@ -166,7 +166,7 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            width: 30%; /* Increased width to cover empty space */
+            width: 30%;
             z-index: 2;
             pointer-events: none;
         }
@@ -210,10 +210,10 @@
             transform: translateY(-50%) scale(1.1);
         }
         .carousel-arrow.prev {
-            left: 8%; /* Repositioned to be closer to cards */
+            left: 8%;
         }
         .carousel-arrow.next {
-            right: 8%; /* Repositioned to be closer to cards */
+            right: 8%;
         }
        
         /* --- Team Section Carousel --- */
@@ -307,6 +307,20 @@
             }
             .carousel-arrow.next {
                 right: 0.5rem;
+            }
+            /* ===== NEW: Reduced fade width on mobile ===== */
+            .carousel-wrapper::before,
+            .carousel-wrapper::after {
+                width: 15%;
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .carousel-arrow.prev {
+                left: -60px;
+            }
+            .carousel-arrow.next {
+                right: -60px;
             }
         }
 
@@ -825,8 +839,9 @@
 
         function drag(e) {
             if (e.touches) e.clientX = e.touches[0].clientX;
+            // ===== MODIFIED: Increased drag sensitivity =====
             gsap.to('.game-carousel-ring', {
-                rotationY: '-=' + ((Math.round(e.clientX) - xPos) % 360) * 0.5,
+                rotationY: '-=' + ((Math.round(e.clientX) - xPos) % 360),
             });
             xPos = Math.round(e.clientX);
         }
