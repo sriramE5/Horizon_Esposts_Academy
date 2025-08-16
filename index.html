@@ -197,9 +197,17 @@
             }
             
             /* Team carousel sizing */
-            .team-swiper .swiper-slide {
-                width: 280px !important;
-                height: 380px !important;
+            .team-swiper {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            /* .team-swiper .swiper-slide {
+                width: 85% !important;
+                height: 350px !important;
+            } */
+            .team-swiper .swiper-button-next,
+            .team-swiper .swiper-button-prev {
+                display: none; /* Hide arrows on mobile for more space */
             }
             
             /* News cards full width */
@@ -237,11 +245,16 @@
                 font-size: 2.5rem !important;
             }
             
-            /* Logo sizing
-            header svg {
-                width: 8rem !important;
-                height: 8rem !important;
-            } */
+        }
+        @media (min-width: 1440px) {
+            /* swipper-wrapper must have a fixed wdth and center alignment  */
+            .team-swiper .swiper-wrapper {
+                max-width: 1200; 
+                margin: auto;
+            }
+            .team-swiper .swiper-slide {
+                margin: 0 15px; /* Add some spacing between slides */
+            }
         }
     </style>
 </head>
@@ -626,10 +639,10 @@
             grabCursor: true,
             centeredSlides: true,
             loop: true,
-            slidesPerView: 1, // Mobile-first: 1 slide
+            slidesPerView: 'auto',
             spaceBetween: 30,
             coverflowEffect: {
-                rotate: 50,
+                rotate: 20,
                 stretch: 0,
                 depth: 100,
                 modifier: 1,
@@ -639,7 +652,26 @@
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20
+                },
+                768: {
+                    slidesPerView: 1,
+                    spaceBetween: 30
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40
+                },
+                1440: {
+                    slidesPerView: 3,
+                    spaceBetween: 50
+                }
+            }
         });
+
         
     });
     function setVhUnits() {
