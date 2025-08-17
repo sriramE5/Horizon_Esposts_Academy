@@ -308,7 +308,6 @@
             .carousel-arrow.next {
                 right: 0.5rem;
             }
-            /* ===== NEW: Reduced fade width on mobile ===== */
             .carousel-wrapper::before,
             .carousel-wrapper::after {
                 width: 15%;
@@ -757,15 +756,18 @@
     <script>
     $(document).ready(function() {
         // --- 3D Game Carousel Logic ---
+        // ===== MODIFIED: Games list updated and repeated =====
         const games = [
             { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'CLASH SQUAD' },
             { img: 'https://placehold.co/400x560/4ECDC4/FFFFFF?text=BGMI', title: 'BGMI', subtitle: 'CLASSIC' },
-            { img: 'https://placehold.co/400x560/FD746C/FFFFFF?text=Valorant', title: 'VALORANT', subtitle: 'COMPETITIVE' },
             { img: 'https://placehold.co/400x560/F9A825/000000?text=COD', title: 'CALL OF DUTY', subtitle: 'MULTIPLAYER' },
-            { img: 'https://placehold.co/400x560/DA4453/FFFFFF?text=Apex+Legends', title: 'APEX LEGENDS', subtitle: 'TRIOS' },
             { img: 'https://placehold.co/400x560/2C3E50/FFFFFF?text=Clash+of+Clans', title: 'CLASH OF CLANS', subtitle: 'CLAN WARS' },
-            { img: 'https://placehold.co/400x560/007CF0/FFFFFF?text=Rocket+League', title: 'ROCKET LEAGUE', subtitle: 'DOUBLES' },
             { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'BATTLE ROYALE' },
+            { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'CLASH SQUAD' },
+            { img: 'https://placehold.co/400x560/4ECDC4/FFFFFF?text=BGMI', title: 'BGMI', subtitle: 'CLASSIC' },
+            { img: 'https://placehold.co/400x560/F9A825/000000?text=COD', title: 'CALL OF DUTY', subtitle: 'MULTIPLAYER' },
+            { img: 'https://placehold.co/400x560/2C3E50/FFFFFF?text=Clash+of+Clans', title: 'CLASH OF CLANS', subtitle: 'CLAN WARS' },
+            { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'BATTLE ROYALE' }
         ];
 
         const ring = $('.game-carousel-ring');
@@ -788,8 +790,9 @@
             .set('.game-carousel-ring', { rotationY: 180, cursor: 'grab' })
             .set('.game-carousel-img', {
                 rotateY: (i) => i * -angle,
-                transformOrigin: '50% 50% 450px',
-                z: -450,
+                // ===== MODIFIED: Radius increased for 10 cards =====
+                transformOrigin: '50% 50% 550px',
+                z: -550,
                 backgroundImage: (i) => `url(${games[i].img})`,
             })
             .from('.game-carousel-img', {
@@ -839,7 +842,6 @@
 
         function drag(e) {
             if (e.touches) e.clientX = e.touches[0].clientX;
-            // ===== MODIFIED: Increased drag sensitivity =====
             gsap.to('.game-carousel-ring', {
                 rotationY: '-=' + ((Math.round(e.clientX) - xPos) % 360),
             });
