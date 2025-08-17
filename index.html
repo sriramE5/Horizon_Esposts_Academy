@@ -85,6 +85,11 @@
         body.light-theme .hover\:text-white:hover {
             color: var(--color-primary) !important;
         }
+        /* ===== NEW: Exception for card titles ===== */
+        body.light-theme .team-member-card h3,
+        body.light-theme .game-info h3 {
+            color: #FFFFFF !important;
+        }
 
 
         /* --- Hero Section & Interactive Background --- */
@@ -756,7 +761,6 @@
     <script>
     $(document).ready(function() {
         // --- 3D Game Carousel Logic ---
-        // ===== MODIFIED: Games list updated and repeated =====
         const games = [
             { img: 'https://placehold.co/400x560/FF416C/FFFFFF?text=Free+Fire', title: 'FREE FIRE', subtitle: 'CLASH SQUAD' },
             { img: 'https://placehold.co/400x560/4ECDC4/FFFFFF?text=BGMI', title: 'BGMI', subtitle: 'CLASSIC' },
@@ -790,7 +794,6 @@
             .set('.game-carousel-ring', { rotationY: 180, cursor: 'grab' })
             .set('.game-carousel-img', {
                 rotateY: (i) => i * -angle,
-                // ===== MODIFIED: Radius increased for 10 cards =====
                 transformOrigin: '50% 50% 550px',
                 z: -550,
                 backgroundImage: (i) => `url(${games[i].img})`,
