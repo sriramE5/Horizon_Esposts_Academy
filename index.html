@@ -18,17 +18,29 @@
         :root {
             --color-primary: #8E2DE2;
             --color-secondary: #4A00E0;
-            --color-accent: #00ffc3; /* Electric Cyan */
-            --color-bg-dark: #020010;
-            --color-bg-light: #F0F2F5;
-            --color-text-dark: #E0E0E0;
-            --color-text-light: #121212;
+            --color-accent: #00ffc3;
+            
+            /* Default to Light Theme colors */
+            --color-bg: #F0F2F5;
+            --color-text: #121212;
+            --color-text-muted: #4a5568;
+            --color-card-bg: rgba(255, 255, 255, 0.6);
+            --color-card-border: rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            /* Dark Theme color overrides */
+            --color-bg: #020010;
+            --color-text: #E0E0E0;
+            --color-text-muted: #a0aec0;
+            --color-card-bg: rgba(15, 12, 41, 0.5);
+            --color-card-border: rgba(142, 45, 226, 0.3);
         }
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--color-bg-dark);
-            color: var(--color-text-dark);
+            background-color: var(--color-bg);
+            color: var(--color-text);
             overflow-x: hidden;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
@@ -38,65 +50,46 @@
             text-transform: uppercase;
         }
 
-        /* --- Theme Toggle & Light Mode --- */
-        body.light-theme {
-            background-color: var(--color-bg-light);
-            color: var(--color-text-light);
-        }
+        /* --- Theme Toggle --- */
         .theme-toggle-icon {
             transition: transform 0.5s ease, opacity 0.5s ease;
         }
         .sun-icon { position: absolute; opacity: 0; transform: rotate(-90deg) scale(0.5); }
         .moon-icon { position: absolute; opacity: 1; transform: rotate(0deg) scale(1); }
-        body.light-theme .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); }
-        body.light-theme .moon-icon { opacity: 0; transform: rotate(90deg) scale(0.5); }
-        body.light-theme .glass-card {
-            background: rgba(255, 255, 255, 0.6);
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-        body.light-theme .glass-card:hover {
-             background: rgba(255, 255, 255, 0.8);
-        }
-        body.light-theme header.scrolled, body.light-theme #mobile-menu {
+        body.dark-mode .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); }
+        body.dark-mode .moon-icon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+
+        /* --- Header --- */
+        header.scrolled, #mobile-menu {
             background: rgba(255,255,255,0.8);
-            border-bottom-color: #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-        body.light-theme .stat-card {
-            background: linear-gradient(90deg, rgba(142, 45, 226, 0.05), transparent);
+        body.dark-mode header.scrolled, body.dark-mode #mobile-menu {
+            background: rgba(2,0,16,0.8);
+            border-bottom-color: rgba(142, 45, 226, 0.3);
         }
-        body.light-theme input, body.light-theme textarea {
-            background-color: #FFF;
-            border-color: #d1d5db;
-        }
-        body.light-theme .team-swiper .swiper-slide {
-             background: #e9e9f0;
-        }
-        body.light-theme .team-swiper .swiper-button-next, body.light-theme .team-swiper .swiper-button-prev,
-        body.light-theme .carousel-arrow {
-            color: var(--color-text-light);
-        }
-        /* --- FIX: Light mode text color overrides --- */
-        body.light-theme .text-white {
-            color: var(--color-text-light) !important;
-        }
-        body.light-theme .text-gray-300 {
-            color: #4a5568 !important; /* A mid-gray for light mode */
-        }
-        body.light-theme .hover\:text-white:hover {
-            color: var(--color-primary) !important;
-        }
-        /* ===== NEW: Exception for card titles ===== */
-        body.light-theme .team-member-card h3,
-        body.light-theme .game-info h3 {
-            color: #FFFFFF !important;
-        }
+        
+        /* --- Text Colors --- */
+        .nav-link { color: var(--color-text-muted); }
+        .nav-link:hover { color: var(--color-primary); }
+        body.dark-mode .nav-link:hover { color: #FFFFFF; }
+        .sub-heading { color: var(--color-text-muted); }
 
 
         /* --- Hero Section & Interactive Background --- */
         .hero-section {
             position: relative;
             overflow: hidden;
+            /* ===== MODIFIED: Hero text color is now theme-aware ===== */
+            color: white; /* Default for dark mode */
         }
+        /* When NOT in dark mode, hero text should match the body text color */
+        body:not(.dark-mode) .hero-section {
+            color: var(--color-text);
+        }
+
         #particle-canvas {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -161,7 +154,9 @@
             right: 0;
             padding: 1rem;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            transition: opacity 0.3s ease;
+        }
+        .game-info h3, .team-member-card h3 {
+            color: #FFFFFF !important;
         }
 
         /* --- Gradient Overlay for Fading Edges --- */
@@ -174,20 +169,12 @@
             width: 30%;
             z-index: 2;
             pointer-events: none;
-        }
-        .carousel-wrapper::before {
-            left: 0;
-            background: linear-gradient(to right, var(--color-bg-dark), transparent);
+            background: linear-gradient(to right, var(--color-bg), transparent);
         }
         .carousel-wrapper::after {
             right: 0;
-            background: linear-gradient(to left, var(--color-bg-dark), transparent);
-        }
-        body.light-theme .carousel-wrapper::before {
-             background: linear-gradient(to right, var(--color-bg-light), transparent);
-        }
-        body.light-theme .carousel-wrapper::after {
-             background: linear-gradient(to left, var(--color-bg-light), transparent);
+            left: auto;
+            background: linear-gradient(to left, var(--color-bg), transparent);
         }
 
 
@@ -232,11 +219,13 @@
             background-size: cover;
             width: 300px; 
             height: 420px;
-            background: #111;
             border-radius: 1rem;
             overflow: hidden;
-            border: 1px solid rgba(142, 45, 226, 0.3);
-            transition: background 0.5s ease;
+            background: #e9e9f0; /* Light mode default */
+        }
+        body.dark-mode .team-swiper .swiper-slide {
+             background: #111;
+             border: 1px solid rgba(142, 45, 226, 0.3);
         }
         .team-swiper .swiper-slide-shadow-left,
         .team-swiper .swiper-slide-shadow-right {
@@ -252,32 +241,57 @@
             transform: scale(1.1);
         }
         .team-swiper .swiper-button-next, .team-swiper .swiper-button-prev {
+            color: var(--color-text);
+        }
+        body.dark-mode .team-swiper .swiper-button-next, body.dark-mode .team-swiper .swiper-button-prev {
             color: var(--color-accent);
         }
 
         /* --- General UI & Animations --- */
         .glass-card {
-            background: rgba(15, 12, 41, 0.5);
+            background: var(--color-card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(142, 45, 226, 0.3);
+            border: 1px solid var(--color-card-border);
             transition: all 0.3s ease;
         }
         .glass-card:hover {
-            background: rgba(25, 22, 51, 0.7);
             border-color: var(--color-accent);
             transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.8);
         }
+        body.dark-mode .glass-card:hover {
+             background: rgba(25, 22, 51, 0.7);
+        }
+
         .stat-card {
             border-left: 4px solid var(--color-primary);
-            background: linear-gradient(90deg, rgba(142, 45, 226, 0.1), transparent);
+            background: linear-gradient(90deg, rgba(142, 45, 226, 0.05), transparent);
             transition: all 0.3s ease;
         }
+        body.dark-mode .stat-card {
+             background: linear-gradient(90deg, rgba(142, 45, 226, 0.1), transparent);
+        }
         .stat-card:hover {
-            background: linear-gradient(90deg, rgba(0, 255, 195, 0.15), transparent);
+            background: linear-gradient(90deg, rgba(0, 255, 195, 0.1), transparent);
             border-left-color: var(--color-accent);
             transform: scale(1.05);
         }
+        body.dark-mode .stat-card:hover {
+            background: linear-gradient(90deg, rgba(0, 255, 195, 0.15), transparent);
+        }
+
+        /* --- Form --- */
+        input, textarea {
+            background-color: #FFF;
+            border: 1px solid #d1d5db;
+        }
+        body.dark-mode input, body.dark-mode textarea {
+            background-color: rgba(17, 24, 39, 0.5); /* gray-900/50 */
+            border-color: #4B0082; /* indigo-900 */
+            color: #E0E0E0;
+        }
+        
         .scroll-reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -287,6 +301,7 @@
             opacity: 1;
             transform: translateY(0);
         }
+
         /* --- Mobile Responsiveness Fixes --- */
         @media (max-width: 640px) {
             header { padding: 0 1rem !important; }
@@ -344,7 +359,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="#home" class="flex items-center space-x-3">
-                    <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M2 17L12 22L22 17" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M2 12L12 17L22 12" stroke="url(#logo-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -355,13 +370,13 @@
                             </linearGradient>
                         </defs>
                     </svg>
-                    <span class="font-teko text-3xl text-white">HORIZON</span>
+                    <span class="font-teko text-3xl">HORIZON</span>
                 </a>
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="text-gray-300 hover:text-white transition-colors duration-300">ABOUT</a>
-                    <a href="#teams" class="text-gray-300 hover:text-white transition-colors duration-300">ROSTERS</a>
-                    <a href="#our-team" class="text-gray-300 hover:text-white transition-colors duration-300">PLAYERS</a>
-                    <a href="#news" class="text-gray-300 hover:text-white transition-colors duration-300">NEWS</a>
+                    <a href="#about" class="nav-link transition-colors duration-300">ABOUT</a>
+                    <a href="#teams" class="nav-link transition-colors duration-300">ROSTERS</a>
+                    <a href="#our-team" class="nav-link transition-colors duration-300">PLAYERS</a>
+                    <a href="#news" class="nav-link transition-colors duration-300">NEWS</a>
                 </nav>
                 <div class="flex items-center space-x-4">
                     <button id="theme-toggle" class="relative w-8 h-8 flex items-center justify-center" aria-label="Toggle theme">
@@ -371,19 +386,19 @@
                      <a href="#contact" class="hidden md:block bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold py-2 px-6 rounded-md hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
                         JOIN US
                     </a>
-                    <button id="mobile-menu-button" class="md:hidden text-white">
+                    <button id="mobile-menu-button" class="md:hidden">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-lg">
+        <div id="mobile-menu" class="hidden md:hidden">
              <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">ABOUT</a>
-                <a href="#teams" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">ROSTERS</a>
-                <a href="#our-team" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">PLAYERS</a>
-                <a href="#news" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">NEWS</a>
-                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700">JOIN US</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium nav-link">ABOUT</a>
+                <a href="#teams" class="block px-3 py-2 rounded-md text-base font-medium nav-link">ROSTERS</a>
+                <a href="#our-team" class="block px-3 py-2 rounded-md text-base font-medium nav-link">PLAYERS</a>
+                <a href="#news" class="block px-3 py-2 rounded-md text-base font-medium nav-link">NEWS</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium nav-link">JOIN US</a>
             </div>
         </div>
     </header>
@@ -392,9 +407,8 @@
         <section id="home" class="hero-section min-h-screen flex items-center justify-center">
             <canvas id="particle-canvas"></canvas>
             <div class="text-center z-10 max-w-5xl mx-auto px-4">
-                <h1 class="hero-title font-teko text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] text-white leading-none" id="hero-title-text">
-                    </h1>
-                <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mt-4 scroll-reveal">
+                <h1 class="hero-title font-teko text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] leading-none" id="hero-title-text"></h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mt-4 scroll-reveal">
                     FORGING THE NEXT GENERATION OF ESPORTS CHAMPIONS.
                 </p>
             </div>
@@ -402,8 +416,8 @@
 
         <section id="games" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">OUR FEATURED GAMES</h2>
-                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Showcasing our presence in the top competitive titles.</p>
+                <h2 class="font-teko text-5xl md:text-6xl scroll-reveal">OUR FEATURED GAMES</h2>
+                <p class="text-lg md:text-xl sub-heading max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Showcasing our presence in the top competitive titles.</p>
             </div>
              
              <div class="mt-12 relative carousel-wrapper">
@@ -425,22 +439,22 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
                     <div class="scroll-reveal">
-                        <h2 class="font-teko text-5xl md:text-6xl text-white">WHO WE ARE</h2>
-                        <p class="text-base md:text-lg text-gray-400 mt-4 leading-relaxed">
+                        <h2 class="font-teko text-5xl md:text-6xl">WHO WE ARE</h2>
+                        <p class="text-base md:text-lg sub-heading mt-4 leading-relaxed">
                             Horizon is more than an esports organization; it's a crucible for talent. Founded in 2025, we've rapidly ascended to become a powerhouse in competitive gaming. Our mission is to identify, nurture, and propel aspiring gamers to the zenith of the professional world.
                         </p>
                         <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
                             <div class="stat-card p-4 scroll-reveal" style="transition-delay: 0.2s;">
                                 <p class="font-teko text-4xl md:text-5xl text-purple-400">47+</p>
-                                <p class="text-gray-300">Championships</p>
+                                <p class="sub-heading">Championships</p>
                             </div>
                             <div class="stat-card p-4 scroll-reveal" style="transition-delay: 0.4s;">
                                 <p class="font-teko text-4xl md:text-5xl text-purple-400">$2.4M</p>
-                                <p class="text-gray-300">Prize Money</p>
+                                <p class="sub-heading">Prize Money</p>
                             </div>
                             <div class="stat-card p-4 scroll-reveal" style="transition-delay: 0.6s;">
                                 <p class="font-teko text-4xl md:text-5xl text-purple-400">5</p>
-                                <p class="text-gray-300">Pro Rosters</p>
+                                <p class="sub-heading">Pro Rosters</p>
                             </div>
                         </div>
                     </div>
@@ -456,8 +470,8 @@
 
         <section id="teams" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">MEET OUR ROSTERS</h2>
-                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Dominating across the world's biggest esports titles.</p>
+                <h2 class="font-teko text-5xl md:text-6xl scroll-reveal">MEET OUR ROSTERS</h2>
+                <p class="text-lg md:text-xl sub-heading max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">Dominating across the world's biggest esports titles.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
                     <div class="glass-card p-8 rounded-lg scroll-reveal"><h3 class="font-teko text-4xl text-red-400">VALORANT</h3></div>
                     <div class="glass-card p-8 rounded-lg scroll-reveal" style="transition-delay: 0.2s;"><h3 class="font-teko text-4xl text-blue-400">LEAGUE OF LEGENDS</h3></div>
@@ -468,50 +482,50 @@
         
         <section id="our-team" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">MEET THE TEAM</h2>
-                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">The masterminds and rising stars behind our success.</p>
+                <h2 class="font-teko text-5xl md:text-6xl scroll-reveal">MEET THE TEAM</h2>
+                <p class="text-lg md:text-xl sub-heading max-w-2xl mx-auto mt-2 scroll-reveal" style="transition-delay: 0.2s;">The masterminds and rising stars behind our success.</p>
             </div>
             <div class="swiper-container team-swiper mt-16 px-4 sm:px-0">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+1" class="member-image" alt="Player 1" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <h3 class="font-teko text-4xl">PLAYER NAME</h3>
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+2" class="member-image" alt="Player 2" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <h3 class="font-teko text-4xl">PLAYER NAME</h3>
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+3" class="member-image" alt="Player 3" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <h3 class="font-teko text-4xl">PLAYER NAME</h3>
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+4" class="member-image" alt="Player 4" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <h3 class="font-teko text-4xl">PLAYER NAME</h3>
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+5" class="member-image" alt="Player 5" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <h3 class="font-teko text-4xl">PLAYER NAME</h3>
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
                     <div class="swiper-slide team-member-card">
                         <img src="https://placehold.co/400x560/1A1A2E/FFFFFF?text=Player+6" class="member-image" alt="Player 6" />
                         <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                            <h3 class="font-teko text-4xl text-white">PLAYER NAME</h3>
+                            <h3 class="font-teko text-4xl">PLAYER NAME</h3>
                             <p style="color: var(--color-accent)">ROLE / TITLE</p>
                         </div>
                     </div>
@@ -523,19 +537,19 @@
 
         <section id="news" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="font-teko text-5xl md:text-6xl text-white text-center scroll-reveal">LATEST INTEL</h2>
+                <h2 class="font-teko text-5xl md:text-6xl text-center scroll-reveal">LATEST INTEL</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/FF416C/FFFFFF?text=Victory" alt="News Image 1" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
-                        <div class="p-6"><p class="text-sm text-purple-400">August 16, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Horizon Conquers Regional Finals!</h3></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">August 16, 2025</p><h3 class="font-teko text-3xl mt-2 group-hover:text-cyan-400 transition-colors">Horizon Conquers Regional Finals!</h3></div>
                     </a>
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.2s;">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/00F260/FFFFFF?text=Academy" alt="News Image 2" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
-                        <div class="p-6"><p class="text-sm text-purple-400">August 12, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">Next-Gen Academy Program Launched</h3></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">August 12, 2025</p><h3 class="font-teko text-3xl mt-2 group-hover:text-cyan-400 transition-colors">Next-Gen Academy Program Launched</h3></div>
                     </a>
                     <a href="#" class="block group glass-card rounded-lg overflow-hidden scroll-reveal" style="transition-delay: 0.4s;">
                         <div class="overflow-hidden"><img src="https://placehold.co/600x400/0575E6/FFFFFF?text=Partnership" alt="News Image 3" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"></div>
-                        <div class="p-6"><p class="text-sm text-purple-400">August 09, 2025</p><h3 class="font-teko text-3xl mt-2 text-white group-hover:text-cyan-400 transition-colors">New Partnership with Razer</h3></div>
+                        <div class="p-6"><p class="text-sm text-purple-400">August 09, 2025</p><h3 class="font-teko text-3xl mt-2 group-hover:text-cyan-400 transition-colors">New Partnership with Razer</h3></div>
                     </a>
                 </div>
             </div>
@@ -543,13 +557,13 @@
 
         <section id="contact" class="py-16 md:py-24">
              <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="font-teko text-5xl md:text-6xl text-white scroll-reveal">BECOME A LEGEND</h2>
+                <h2 class="font-teko text-5xl md:text-6xl scroll-reveal">BECOME A LEGEND</h2>
                 <form id="contact-form" class="mt-12 max-w-xl mx-auto space-y-6 scroll-reveal" style="transition-delay: 0.2s;">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <input type="text" name="name" placeholder="YOUR NAME" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
-                        <input type="email" name="email" placeholder="YOUR EMAIL" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
+                        <input type="text" name="name" placeholder="YOUR NAME" class="w-full rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
+                        <input type="email" name="email" placeholder="YOUR EMAIL" class="w-full rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300">
                     </div>
-                    <textarea name="message" placeholder="YOUR MESSAGE" rows="5" class="w-full bg-gray-900/50 border border-purple-800 rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300 resize-none"></textarea>
+                    <textarea name="message" placeholder="YOUR MESSAGE" rows="5" class="w-full rounded-md px-4 py-3 focus:border-cyan-400 focus:outline-none transition-colors duration-300 resize-none"></textarea>
                     <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold text-lg py-4 px-10 rounded-md transition-all duration-300 transform hover:scale-105">
                         SEND MESSAGE
                     </button>
@@ -673,9 +687,9 @@
         if (header) {
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
-                    header.classList.add('scrolled', 'bg-black/80', 'backdrop-blur-lg', 'border-b', 'border-purple-900/50');
+                    header.classList.add('scrolled');
                 } else {
-                    header.classList.remove('scrolled', 'bg-black/80', 'backdrop-blur-lg', 'border-b', 'border-purple-900/50');
+                    header.classList.remove('scrolled');
                 }
             });
         }
@@ -684,7 +698,7 @@
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('light-theme');
+                document.body.classList.toggle('dark-mode');
             });
         }
 
@@ -779,7 +793,7 @@
             const item = `
                 <div class="game-carousel-img">
                     <div class="game-info">
-                        <h3 class="font-teko text-4xl text-white">${game.title}</h3>
+                        <h3 class="font-teko text-4xl">${game.title}</h3>
                         <p style="color: var(--color-accent)">${game.subtitle}</p>
                     </div>
                 </div>`;
