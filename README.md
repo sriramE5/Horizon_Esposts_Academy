@@ -1,4 +1,4 @@
-website link: https://srirame5.github.io/Horizon_Esposts_Academy/
+website output link: https://srirame5.github.io/Horizon_Esposts_Academy/
 
 
 ---
@@ -34,45 +34,32 @@ Once logged in, the user should see a dashboard-style interface.
 
 ---
 
-## **3. Admin Pages (Optional if you want management controls)**
-
-* **`admin-dashboard.html`** – Overview of platform stats, user activity, tournaments.
-* **`manage-users.html`** – Add, remove, or edit user accounts.
-* **`manage-tournaments.html`** – Approve, edit, or delete tournaments.
-* **`site-settings.html`** – Change site-wide settings (branding, rules, payment options).
-
----
-
 ## **4. Suggested Folder Structure**
 
 ```
-/public
-  index.html
-  about.html
-  login.html
-  register.html
-  forgot-password.html
-
-/platform
-  dashboard.html
-  my-tournaments.html
-  create-tournament.html
-  tournament-details.html
-  join-tournament.html
-  notifications.html
-  profile.html
-  settings.html
-
-/admin
-  admin-dashboard.html
-  manage-users.html
-  manage-tournaments.html
-  site-settings.html
-
-/assets
+/frontend
+  /components
   /css
-  /js
+  /icons
   /images
+  /logos
+  /pages
+    about.html
+    login.html
+    register.html
+    forgot-password.html
+
+    dashboard.html
+    my-tournaments.html
+    create-tournament.html
+    tournament-details.html
+    join-tournament.html
+
+    notifications.html
+    profile.html
+    settings.html
+index.html
+
 ```
 
 ---
